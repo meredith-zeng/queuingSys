@@ -5,7 +5,7 @@ import com.ahzeng.queuingSys.pojo.Worker;
 import com.ahzeng.queuingSys.services.WorkerService;
 import com.ahzeng.queuingSys.utils.CodeMsg;
 import com.ahzeng.queuingSys.utils.Result;
-import com.ahzeng.queuingSys.vo.User;
+import com.ahzeng.queuingSys.vo.WorkerVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +19,7 @@ public class WorkerServiceImpl implements WorkerService {
     private WorkerMapper workerMapper;
 
     //登录验证
+    @Override
     public CodeMsg loginVerify(Worker record){
         Worker worker =  workerMapper.selectByPrimaryKey(record.getId());
         if (worker != null) {
@@ -30,35 +31,38 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     //根据id查询
+    @Override
     public Result userSelectByPrimaryKey(int id){
         Worker worker =  workerMapper.selectByPrimaryKey(id);
-        User user = new User();
+        WorkerVo workerVo = new WorkerVo();
         if (worker != null){
-            user.setAccount(worker.getAccount());
-            user.setId(worker.getId());
-            return Result.success(user);
+            workerVo.setAccount(worker.getAccount());
+            workerVo.setId(worker.getId());
+            return Result.success(workerVo);
         }else {
             return Result.error(CodeMsg.WorkerSelectByPrimaryKey_ERROR);
         }
     }
 
     //查询存在的所有员工
+    @Override
     public Result userSelectAll(){
-        List<User> userList = new LinkedList<>();
+        List<WorkerVo> workerVoList = new LinkedList<>();
         List<Worker> listOfWorker = workerMapper.selectAll();
         if (listOfWorker != null){
             for (Worker worker : listOfWorker) {
-                User user = new User();
-                user.setId(worker.getId());
-                user.setAccount(worker.getAccount());
-                userList.add(user);
+                WorkerVo workerVo = new WorkerVo();
+                workerVo.setId(worker.getId());
+                workerVo.setAccount(worker.getAccount());
+                workerVoList.add(workerVo);
             }
-            return Result.success(userList);
+            return Result.success(workerVoList);
         }
         return Result.error(CodeMsg.UserSelectAll_ERROR);
     }
 
     //修改指定员工的信息
+    @Override
     @Transactional
     public CodeMsg userUpdateByPrimaryKeySelective(Worker record){
         int resultOfOperation = workerMapper.updateByPrimaryKeySelective(record);
@@ -69,6 +73,7 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     //新增员工
+    @Override
     @Transactional
     public CodeMsg userInsertSelective(Worker record){
         int resultOfOperation = workerMapper.insertSelective(record);
@@ -79,6 +84,7 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     //删除员工
+    @Override
     @Transactional
     public CodeMsg userDeleteByPrimaryKey(Object key){
         int resultOfOperation = workerMapper.deleteByPrimaryKey(key);

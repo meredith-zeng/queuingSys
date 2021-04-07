@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.Column;
 
 @Data
-public class TableInfo {
+public class TableVo {
 //    桌子id
     private Integer tableId;
 //    桌子类型

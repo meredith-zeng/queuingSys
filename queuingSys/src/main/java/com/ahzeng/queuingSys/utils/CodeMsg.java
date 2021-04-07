@@ -38,6 +38,19 @@ public class CodeMsg {
     public static final CodeMsg tableDeleteByPrimaryKey_SUCCESS = new CodeMsg(208, "根据主键删除桌子成功");
     public static final CodeMsg tableDeleteByPrimaryKey_ERROR = new CodeMsg(209, "根据主键删除桌子失败");
 
+    //顾客管理模块
+    public static final CodeMsg GuestSelect_SUCCESS = new CodeMsg(300, "按条件查询顾客成功");
+    public static final CodeMsg GuestSelect_ERROR = new CodeMsg(301, "按条件查询顾客失败");
+    public static final CodeMsg GuestSelectByPrimaryKey_SUCCESS = new CodeMsg(302, "根据id查询顾客成功");
+    public static final CodeMsg GuestSelectByPrimaryKey_ERROR = new CodeMsg(303, "根据id查询顾客失败");
+    public static final CodeMsg GuestUpdateByPrimaryKeySelective_SUCCESS = new CodeMsg(304, "根据主键修改指定顾客的信息成功");
+    public static final CodeMsg GuestUpdateByPrimaryKeySelective_ERROR = new CodeMsg(305, "根据主键修改指定顾客的信息失败");
+    public static final CodeMsg GuestInsertSelective_SUCCESS = new CodeMsg(306, "新增顾客成功");
+    public static final CodeMsg GuestInsertSelective_ERROR = new CodeMsg(307, "新增顾客失败");
+    public static final CodeMsg GuestDeleteByPrimaryKey_SUCCESS = new CodeMsg(308, "根据主键删除顾客成功");
+    public static final CodeMsg GuestDeleteByPrimaryKey_ERROR = new CodeMsg(309, "根据主键删除顾客失败");
+
+
     private CodeMsg(int code, String msg) {
             this.code=code;
             this.msg=msg;

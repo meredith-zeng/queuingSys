@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://1.15.173.246:3306/queuingSys
+    url: jdbc:mysql://1.15.173.246:3306/queuingSys?characterEncoding=utf-8
     username: root
     password: a13098663096A
 logging:
