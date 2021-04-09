@@ -19,7 +19,7 @@ public class TableOfHallServiceImpl implements TableOfHallService {
     private TableOfHallMapper tableOfHallMapper;
     //按条件查询桌子
     @Override
-    public Result tableSelect(TableOfHall record) {
+    public Result<List<TableVo>> tableSelect(TableOfHall record) {
         List<TableOfHall> tableOfHallList = tableOfHallMapper.select(record);
         if (tableOfHallList.size() > 0){
             List<TableVo> tableVoList = new LinkedList<>();
@@ -38,7 +38,7 @@ public class TableOfHallServiceImpl implements TableOfHallService {
     }
     //
     @Override
-    public Result tableSelectByPrimaryKey(int id) {
+    public Result<TableVo> tableSelectByPrimaryKey(int id) {
         TableOfHall tableOfHall = tableOfHallMapper.selectByPrimaryKey(id);
         if (tableOfHall != null){
             TableVo tableVo = new TableVo();
@@ -53,8 +53,8 @@ public class TableOfHallServiceImpl implements TableOfHallService {
     }
 
     //根据主键修改指定桌子的信息
-    @Override
     @Transactional
+    @Override
     public CodeMsg tableUpdateByPrimaryKeySelective(TableOfHall record) {
         if (tableOfHallMapper.updateByPrimaryKeySelective(record) == 1){
             return CodeMsg.tableUpdateByPrimaryKeySelective_SUCCESS;
@@ -63,8 +63,8 @@ public class TableOfHallServiceImpl implements TableOfHallService {
     }
 
     //新增桌子
-    @Override
     @Transactional
+    @Override
     public CodeMsg tableInsertSelective(TableOfHall record) {
         if (tableOfHallMapper.insertSelective(record) == 1){
             return CodeMsg.tableUpdateByPrimaryKeySelective_SUCCESS;
@@ -73,8 +73,8 @@ public class TableOfHallServiceImpl implements TableOfHallService {
     }
 
     //根据主键删除桌子
-    @Override
     @Transactional
+    @Override
     public CodeMsg tableDeleteByPrimaryKey(Object key) {
         int resultOfOperation = tableOfHallMapper.deleteByPrimaryKey(key);
         if (resultOfOperation == 1){

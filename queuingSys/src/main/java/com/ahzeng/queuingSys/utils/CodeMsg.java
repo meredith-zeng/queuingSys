@@ -50,6 +50,31 @@ public class CodeMsg {
     public static final CodeMsg GuestDeleteByPrimaryKey_SUCCESS = new CodeMsg(308, "根据主键删除顾客成功");
     public static final CodeMsg GuestDeleteByPrimaryKey_ERROR = new CodeMsg(309, "根据主键删除顾客失败");
 
+    //预定订单管理模块
+    public static final CodeMsg OrderFormSelect_SUCCESS = new CodeMsg(500, "按条件查询预定订单成功");
+    public static final CodeMsg OrderFormSelect_ERROR = new CodeMsg(501, "按条件查询预定订单失败");
+    public static final CodeMsg OrderFormSelectByPrimaryKey_SUCCESS = new CodeMsg(502, "根据id查询预定订单成功");
+    public static final CodeMsg OrderFormSelectByPrimaryKey_ERROR = new CodeMsg(503, "根据id查询预定订单失败");
+    public static final CodeMsg OrderFormUpdateByPrimaryKeySelective_SUCCESS = new CodeMsg(504, "根据主键修改指定预定订单的信息成功");
+    public static final CodeMsg OrderFormUpdateByPrimaryKeySelective_ERROR = new CodeMsg(505, "根据主键修改指定预定订单的信息失败");
+    public static final CodeMsg OrderFormInsertSelective_SUCCESS = new CodeMsg(506, "新增预定订单成功");
+    public static final CodeMsg OrderFormInsertSelective_ERROR = new CodeMsg(507, "新增预定订单失败");
+    public static final CodeMsg OrderFormDeleteByPrimaryKey_SUCCESS = new CodeMsg(508, "根据主键删除预定订单成功");
+    public static final CodeMsg OrderFormDeleteByPrimaryKey_ERROR = new CodeMsg(509, "根据主键删除预定订单失败");
+
+    //预定中间表管理模块
+    public static final CodeMsg OrderingSelect_SUCCESS = new CodeMsg(600, "按条件查询预定中间表表项成功");
+    public static final CodeMsg OrderingSelect_ERROR = new CodeMsg(601, "按条件查询预定中间表表项失败");
+    public static final CodeMsg OrderingSelectByPrimaryKey_SUCCESS = new CodeMsg(602, "根据id查询预定中间表表项成功");
+    public static final CodeMsg OrderingSelectByPrimaryKey_ERROR = new CodeMsg(603, "根据id查询预定中间表表项失败");
+    public static final CodeMsg OrderingUpdateByPrimaryKeySelective_SUCCESS = new CodeMsg(604, "根据主键修改指定预定中间表表项成功");
+    public static final CodeMsg OrderingUpdateByPrimaryKeySelective_ERROR = new CodeMsg(605, "根据主键修改指定预定中间表表项失败");
+    public static final CodeMsg OrderingInsertSelective_SUCCESS = new CodeMsg(606, "新增预定中间表表项成功");
+    public static final CodeMsg OrderingInsertSelective_ERROR = new CodeMsg(607, "新增预定中间表表项失败");
+    public static final CodeMsg OrderingDeleteByPrimaryKey_SUCCESS = new CodeMsg(608, "根据主键删除预定中间表表项成功");
+    public static final CodeMsg OrderingDeleteByPrimaryKey_ERROR = new CodeMsg(609, "根据主键删除预定中间表表项失败");
+
+
 
     private CodeMsg(int code, String msg) {
             this.code=code;

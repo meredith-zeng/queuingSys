@@ -20,7 +20,7 @@ public class GuestServiceImpl implements GuestService {
 
     //按条件查询顾客，不传参就是返回全部内容
     @Override
-    public Result GuestSelect(Guest record) {
+    public Result<List<GuestVo>> GuestSelect(Guest record) {
         List<Guest> guestList = guestMapper.select(record);
         if (guestList.size() > 0){
             List<GuestVo> guestVoList = new LinkedList<>();
@@ -38,7 +38,7 @@ public class GuestServiceImpl implements GuestService {
     }
     //根据id查询顾客
     @Override
-    public Result GuestSelectByPrimaryKey(int id) {
+    public Result<GuestVo> GuestSelectByPrimaryKey(int id) {
         Guest guest = guestMapper.selectByPrimaryKey(id);
         if (guest != null){
             GuestVo guestVo = new GuestVo();

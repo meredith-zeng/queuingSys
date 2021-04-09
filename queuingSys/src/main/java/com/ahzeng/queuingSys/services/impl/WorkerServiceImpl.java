@@ -46,7 +46,7 @@ public class WorkerServiceImpl implements WorkerService {
 
     //查询存在的所有员工
     @Override
-    public Result userSelectAll(){
+    public Result<List<WorkerVo>> userSelectAll(){
         List<WorkerVo> workerVoList = new LinkedList<>();
         List<Worker> listOfWorker = workerMapper.selectAll();
         if (listOfWorker != null){
@@ -62,8 +62,8 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     //修改指定员工的信息
-    @Override
     @Transactional
+    @Override
     public CodeMsg userUpdateByPrimaryKeySelective(Worker record){
         int resultOfOperation = workerMapper.updateByPrimaryKeySelective(record);
         if (resultOfOperation == 1){
@@ -73,8 +73,8 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     //新增员工
-    @Override
     @Transactional
+    @Override
     public CodeMsg userInsertSelective(Worker record){
         int resultOfOperation = workerMapper.insertSelective(record);
         if (resultOfOperation == 1){
@@ -84,8 +84,8 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     //删除员工
-    @Override
     @Transactional
+    @Override
     public CodeMsg userDeleteByPrimaryKey(Object key){
         int resultOfOperation = workerMapper.deleteByPrimaryKey(key);
         if (resultOfOperation == 1){

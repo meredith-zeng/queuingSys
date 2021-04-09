@@ -6,6 +6,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -20,6 +21,6 @@ public class OrderForm {
     @Column
     private String orderStatus;
     @Column
-    private Integer orderPeopleNumber;
+    private Integer guestId;
 
 }
