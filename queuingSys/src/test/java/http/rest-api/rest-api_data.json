@@ -1,6 +1,4 @@
 {
-  "ordering": {
-    "orderingCode": 1 ,
+    "orderCode": 1 ,
     "guestId" : 1
-  }
 }

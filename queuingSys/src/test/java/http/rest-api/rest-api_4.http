@@ -1,16 +1,15 @@
 ### 根据id查询唯一订单
-POST http://localhost:8081/ordering/orderingSelectOne
+POST http://localhost:8081/ordering/selectOne
 Accept: application/json
 Cache-Control: no-cache
 Content-Type: application/json
 
 {
     "orderCode": 1
-
 }
 
 ### 查询订单
-POST http://localhost:8081/ordering/orderingSelect
+POST http://localhost:8081/ordering/select
 Accept: application/json
 Cache-Control: no-cache
 Content-Type: application/json
@@ -19,4 +18,15 @@ Content-Type: application/json
 
   "guestId": 2
 
+}
+
+### update订单
+POST http://localhost:8081/ordering/update
+Accept: application/json
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+    "orderCode": 1 ,
+    "guestId" : 4
 }

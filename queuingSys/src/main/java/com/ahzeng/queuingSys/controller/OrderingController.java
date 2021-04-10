@@ -32,7 +32,7 @@ public class OrderingController {
 //    }
 
 
-    @PostMapping(value = "/orderingSelectOne")
+    @PostMapping(value = "/selectOne")
     @ResponseBody
     public  Result<OrderingVo> orderingSelectOne(@RequestBody Ordering record){
         if (orderingService.OrderingSelectByPrimaryKey(record) != null){
@@ -41,12 +41,18 @@ public class OrderingController {
         return Result.error(CodeMsg.OrderingSelectByPrimaryKey_ERROR);
     }
 
-    @PostMapping(value = "/orderingSelect")
+    @PostMapping(value = "/select")
     @ResponseBody
     public Result<List<OrderingVo>> orderingSelect(@RequestBody Ordering record){
         if (orderingService.OrderingSelect(record) != null){
             return orderingService.OrderingSelect(record);
         }
         return Result.error(CodeMsg.OrderingSelect_ERROR);
+    }
+
+    @PostMapping(value = "/update")
+    @ResponseBody
+    public CodeMsg orderingUpdate(@RequestBody Ordering record) {
+        return orderingService.OrderingUpdateByPrimaryKeySelective(record);
     }
 }
