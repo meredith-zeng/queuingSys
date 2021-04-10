@@ -2,10 +2,11 @@ package com.ahzeng.queuingSys.services.impl;
 
 import com.ahzeng.queuingSys.mapper.OrderFormMapper;
 import com.ahzeng.queuingSys.pojo.OrderForm;
+import com.ahzeng.queuingSys.pojo.Ordering;
 import com.ahzeng.queuingSys.services.OrderFormService;
+import com.ahzeng.queuingSys.services.OrderingService;
 import com.ahzeng.queuingSys.utils.CodeMsg;
 import com.ahzeng.queuingSys.utils.Result;
-import com.ahzeng.queuingSys.vo.GuestVo;
 import com.ahzeng.queuingSys.vo.OrderFormVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,9 @@ import java.util.List;
 public class OrderFormServiceImpl implements OrderFormService {
     @Autowired
     OrderFormMapper orderFormMapper;
+
+    @Autowired
+    OrderingService orderingService;
 
     //按条件查询预定订单，不传参就是返回全部内容
     @Override
@@ -58,7 +62,13 @@ public class OrderFormServiceImpl implements OrderFormService {
     @Override
     public CodeMsg OrderFormUpdateByPrimaryKeySelective(OrderForm record) {
         if (orderFormMapper.updateByPrimaryKeySelective(record) == 1){
-            return CodeMsg.OrderFormUpdateByPrimaryKeySelective_SUCCESS;
+            Ordering ordering = new Ordering();
+            ordering.setOrderCode(record.getOrderCode());
+            ordering.setGuestId(record.getGuestId());
+            CodeMsg codeMsg = orderingService.OrderingUpdateByPrimaryKeySelective(ordering);
+            if (codeMsg.getCode().equals(CodeMsg.OrderingUpdateByPrimaryKeySelective_SUCCESS.getCode())){
+                return CodeMsg.OrderFormUpdateByPrimaryKeySelective_SUCCESS;
+            }
         }
         return CodeMsg.OrderFormUpdateByPrimaryKeySelective_ERROR;
     }
@@ -68,7 +78,13 @@ public class OrderFormServiceImpl implements OrderFormService {
     @Override
     public CodeMsg OrderFormInsertSelective(OrderForm record) {
         if (orderFormMapper.insertSelective(record) == 1){
-            return CodeMsg.OrderFormInsertSelective_SUCCESS;
+            Ordering orderingOfInsert = new Ordering();
+            orderingOfInsert.setOrderCode(record.getOrderCode());
+            orderingOfInsert.setGuestId(record.getGuestId());
+            CodeMsg codeMsg = orderingService.OrderingInsertSelective(orderingOfInsert);
+            if (codeMsg.getCode().equals(CodeMsg.OrderingInsertSelective_SUCCESS.getCode())){
+                return CodeMsg.OrderFormInsertSelective_SUCCESS;
+            }
         }
         return CodeMsg.OrderFormInsertSelective_ERROR;
     }
@@ -79,7 +95,9 @@ public class OrderFormServiceImpl implements OrderFormService {
     public CodeMsg OrderFormDeleteByPrimaryKey(Object key) {
         int resultOfOperation = orderFormMapper.deleteByPrimaryKey(key);
         if (resultOfOperation == 1){
+            if (orderingService.OrderingDeleteByPrimaryKey(key) == CodeMsg.OrderingDeleteByPrimaryKey_SUCCESS){
             return CodeMsg.OrderFormDeleteByPrimaryKey_SUCCESS;
+            }
         }
         return CodeMsg.OrderFormDeleteByPrimaryKey_ERROR;
     }

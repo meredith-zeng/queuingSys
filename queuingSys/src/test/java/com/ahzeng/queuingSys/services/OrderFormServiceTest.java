@@ -37,14 +37,15 @@ OrderFormService orderFormService;
         record.setOrderCode(1);
         record.setOrderTime(DateUtil.getCurrentDate());
         record.setOrderStatus("未处理");
+        record.setGuestId(3);
         System.out.println(orderFormService.OrderFormUpdateByPrimaryKeySelective(record));
     }
 
     @Test
     void orderFormInsertSelective(){
         OrderForm record = new OrderForm();
-        record.setGuestId(1);
-        record.setOrderStatus("预定成功");
+        record.setGuestId(3);
+        record.setOrderStatus("待处理");
         record.setOrderTime(DateUtil.getCurrentDate());
         System.out.println(orderFormService.OrderFormInsertSelective(record));
     }
@@ -52,7 +53,7 @@ OrderFormService orderFormService;
     @Test
     void orderFormDeleteByPrimaryKey() {
         OrderForm record = new OrderForm();
-        record.setOrderCode(3);
+        record.setOrderCode(6);
         System.out.println(orderFormService.OrderFormDeleteByPrimaryKey(record));
     }
 }

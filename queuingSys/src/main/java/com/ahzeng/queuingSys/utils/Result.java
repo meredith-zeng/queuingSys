@@ -13,7 +13,7 @@ public class Result<T> {
     private Result(T data) {
         this.code = 0;
         this.data = data;
-        this.message= message;
+        this.message= "默认成功";
     }
 
     private Result(CodeMsg codeMsg) {

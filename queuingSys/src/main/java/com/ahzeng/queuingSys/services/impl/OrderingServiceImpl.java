@@ -72,14 +72,12 @@ public class OrderingServiceImpl implements OrderingService {
     public Result<OrderingVo> OrderingSelectByPrimaryKey(Ordering key) {
         //这里Object key的格式为Ordering
         int orderCode = key.getOrderCode();
-        int guestId = key.getGuestId();
         //通过orderCode从orderFormService中取得orderFormVo的信息
         OrderFormVo orderFormVo = orderFormService.OrderFormSelectByPrimaryKey(orderCode).getData();
-        //通过guestId从GuestService中国取得guestVo的信息
-        GuestVo guestVo = guestService.GuestSelectByPrimaryKey(guestId).getData();
-
         //将信息组装如orderingVo中
-        if (orderFormVo != null && guestVo != null){
+        if (orderFormVo != null){
+            //通过guestId从GuestService中国取得guestVo的信息
+            GuestVo guestVo = guestService.GuestSelectByPrimaryKey(orderFormVo.getGuestId()).getData();
             OrderingVo orderingVo = new OrderingVo();
             orderingVo.setOrderCode(orderFormVo.getOrderCode());
             orderingVo.setOrderTime(orderFormVo.getOrderTime());

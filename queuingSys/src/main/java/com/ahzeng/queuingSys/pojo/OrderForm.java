@@ -3,10 +3,7 @@ package com.ahzeng.queuingSys.pojo;
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.time.LocalDateTime;
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
@@ -14,6 +11,7 @@ import java.util.Date;
 public class OrderForm {
     @Id
     @KeySql(useGeneratedKeys = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderCode;
 
     @Column
