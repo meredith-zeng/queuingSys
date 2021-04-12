@@ -1,0 +1,129 @@
+<!doctype html>
+<html class="x-admin-sm" lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>阿曾的烤肉店后台管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/static/css/font.css}">
+    <link rel="stylesheet" th:href="@{/static/css/layui.css}">
+
+</head>
+<body>
+
+
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">阿曾的烤肉店</div>
+        <!-- 头部区域（可配合layui 已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img">
+                    店员
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">修改信息</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">登出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;"><i class="fa fa-user-circle-o fa-lg"></i> <span >查看排队报表</span></a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;"><i class="fa fa-list fa-lg"></i> <span >人均排队时间</span></a></dd>
+                        <dd><a href="javascript:;"><i class="fa fa-clipboard fa-lg"></i> <span >每日排队数</span></a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="fa fa-vcard fa-lg"></i> <span >进行叫号操作</span></a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;"><i class="fa fa-th-list fa-lg"></i> <span >叫号</span></a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="fa fa-diamond fa-lg"></i> <span >管理排队</span></a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;"><i class="fa fa-address-book fa-lg"></i> <span >确定预定状态</span></a></dd>
+                        <dd><a href="javascript:;"><i class="fa fa-check-square fa-lg"></i> <span >修改桌位数量</span></a></dd>
+                    </dl>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <div class="layui-tab tab">
+            <ul class="layui-tab-title">
+                <li class="home">
+                    <i class="layui-icon">&#xe68e;</i>烤肉超棒</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <iframe th:src="@{/ordering/orderList}" frameborder="0" id="demoAdmin" style="width: 100%; height: 300px; border-radius: 2px;"></iframe>
+                </div>
+            </div>
+            <div id="tab_show"></div>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        曾雨琳毕设系统
+    </div>
+</div>
+<script th:src="@{/static/layui.js}" charset="utf-8"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+    });
+    var isShow = true;  //定义一个标志位
+    $('.kit-side-fold').click(function(){
+        //选择出所有的span，并判断是不是hidden
+        $('.layui-nav-item span').each(function(){
+            if($(this).is(':hidden')){
+                $(this).show();
+            }else{
+                $(this).hide();
+            }
+        });
+        //判断isshow的状态
+        if(isShow){
+            $('.layui-side.layui-bg-black').width(60); //设置宽度
+            $('.kit-side-fold i').css('margin-right', '70%');  //修改图标的位置
+            //将footer和body的宽度修改
+            $('.layui-body').css('left', 60+'px');
+            $('.layui-footer').css('left', 60+'px');
+            //将二级导航栏隐藏
+            $('dd span').each(function(){
+                $(this).hide();
+            });
+            //修改标志位
+            isShow =false;
+        }else{
+            $('.layui-side.layui-bg-black').width(200);
+            $('.kit-side-fold i').css('margin-right', '10%');
+            $('.layui-body').css('left', 200+'px');
+            $('.layui-footer').css('left', 200+'px');
+            $('dd span').each(function(){
+                $(this).show();
+            });
+            isShow =true;
+        }
+    });
+</script>
+
+</body>
+</html>

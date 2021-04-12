@@ -8,16 +8,18 @@ import lombok.extern.slf4j.Slf4j;
 public class Result<T> {
     private Integer code;
     private T data;
-    private String message;
+    private String msg;
+    private Integer count;
 
     private Result(T data) {
         this.code = 0;
         this.data = data;
-        this.message= "默认成功";
+        this.msg= "默认成功";
+        this.count = 0;
     }
 
     private Result(CodeMsg codeMsg) {
-        this.message=codeMsg.getMsg();
+        this.msg=codeMsg.getMsg();
         this.code=codeMsg.getCode();
     }
 

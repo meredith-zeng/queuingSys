@@ -42,6 +42,23 @@ public class OrderFormServiceImpl implements OrderFormService {
         return Result.error(CodeMsg.OrderFormSelect_ERROR);
     }
 
+    @Override
+    public Result<List<OrderFormVo>> OrderFormSelectAll() {
+        List<OrderForm> orderFormList = orderFormMapper.selectAll();
+        if (orderFormList.size() > 0){
+            List<OrderFormVo> orderFormVoList = new LinkedList<>();
+            for (int i = 0; i < orderFormList.size(); i++){
+                OrderFormVo orderFormVo = new OrderFormVo();
+                orderFormVo.setGuestId(orderFormList.get(i).getGuestId());
+                orderFormVo.setOrderCode(orderFormList.get(i).getOrderCode());
+                orderFormVo.setOrderTime(orderFormList.get(i).getOrderTime());
+                orderFormVo.setOrderStatus(orderFormList.get(i).getOrderStatus());
+                orderFormVoList.add(i,orderFormVo);
+            }
+            return Result.success(orderFormVoList);
+        }
+        return Result.error(CodeMsg.OrderFormSelect_ERROR);
+    }
     //根据id查询预定订单
     @Override
     public Result<OrderFormVo> OrderFormSelectByPrimaryKey(int id) {

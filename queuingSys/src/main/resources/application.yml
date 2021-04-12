@@ -6,6 +6,11 @@ spring:
     url: jdbc:mysql://1.15.173.246:3306/queuingSys?characterEncoding=utf-8
     username: root
     password: a13098663096A
+  mvc:
+    static-path-pattern: /static/**
+    view:
+      prefix: /templates
+      suffix: .html
 logging:
   level:
     org.springframework: info
@@ -14,3 +19,4 @@ mybatis:
   type-aliases-package: com.ahzeng.queuingSys.pojo
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+

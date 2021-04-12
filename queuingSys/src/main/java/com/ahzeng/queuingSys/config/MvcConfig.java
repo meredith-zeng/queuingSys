@@ -2,7 +2,6 @@ package com.ahzeng.queuingSys.config;
 
 
 import com.ahzeng.queuingSys.interceptor.UserInterceptor;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

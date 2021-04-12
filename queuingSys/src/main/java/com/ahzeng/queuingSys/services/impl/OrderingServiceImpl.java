@@ -69,6 +69,33 @@ public class OrderingServiceImpl implements OrderingService {
     }
 
     @Override
+    public Result<List<OrderingVo>> OrderingSelectAll() {
+        List<Ordering> orderingList = orderingMapper.selectAll();
+        if (orderingList.size() > 0){
+            List<OrderingVo> orderingVoList = new LinkedList<>();
+            for (int i = 0; i <orderingList.size(); i++){
+                OrderingVo orderingVo = new OrderingVo();
+                int orderCode = orderingList.get(i).getOrderCode();
+                int guestId = orderingList.get(i).getGuestId();
+                OrderFormVo orderFormVo = orderFormService.OrderFormSelectByPrimaryKey(orderCode).getData();
+                GuestVo guestVo = guestService.GuestSelectByPrimaryKey(guestId).getData();
+
+                orderingVo.setOrderCode(orderFormVo.getOrderCode());
+                orderingVo.setOrderTime(orderFormVo.getOrderTime());
+                orderingVo.setOrderStatus(orderFormVo.getOrderStatus());
+
+                orderingVo.setGuestId(orderFormVo.getGuestId());
+
+                orderingVo.setGender(guestVo.getGender());
+                orderingVo.setPhoneNumber(guestVo.getPhoneNumber());
+                orderingVo.setLastName(guestVo.getLastName());
+                orderingVoList.add(i,orderingVo);
+            }
+            return Result.success(orderingVoList);
+        }
+        return Result.error(CodeMsg.OrderingSelect_ERROR);
+    }
+    @Override
     public Result<OrderingVo> OrderingSelectByPrimaryKey(Ordering key) {
         //这里Object key的格式为Ordering
         int orderCode = key.getOrderCode();

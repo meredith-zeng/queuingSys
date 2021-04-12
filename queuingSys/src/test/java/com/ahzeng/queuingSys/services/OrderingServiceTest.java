@@ -1,15 +1,12 @@
 package com.ahzeng.queuingSys.services;
 
-import com.ahzeng.queuingSys.pojo.OrderForm;
 import com.ahzeng.queuingSys.pojo.Ordering;
-import com.ahzeng.queuingSys.services.OrderingService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 class OrderingServiceTest {

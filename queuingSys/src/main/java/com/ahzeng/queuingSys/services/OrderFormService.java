@@ -18,4 +18,6 @@ public interface OrderFormService {
     CodeMsg OrderFormInsertSelective(OrderForm record);
     //根据主键删除预定订单
     CodeMsg OrderFormDeleteByPrimaryKey(Object key);
+
+    Result<List<OrderFormVo>> OrderFormSelectAll();
 }

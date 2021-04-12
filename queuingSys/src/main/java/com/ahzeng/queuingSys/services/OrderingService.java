@@ -1,6 +1,5 @@
 package com.ahzeng.queuingSys.services;
 
-import com.ahzeng.queuingSys.pojo.OrderForm;
 import com.ahzeng.queuingSys.pojo.Ordering;
 import com.ahzeng.queuingSys.utils.CodeMsg;
 import com.ahzeng.queuingSys.utils.Result;
@@ -20,4 +19,6 @@ public interface OrderingService {
     CodeMsg OrderingInsertSelective(Ordering record);
     //根据主键删除预定中间表表项
     CodeMsg OrderingDeleteByPrimaryKey(Object key);
+
+    Result<List<OrderingVo>> OrderingSelectAll();
 }

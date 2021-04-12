@@ -5,8 +5,6 @@ import com.ahzeng.queuingSys.services.OrderingService;
 import com.ahzeng.queuingSys.utils.CodeMsg;
 import com.ahzeng.queuingSys.utils.Result;
 import com.ahzeng.queuingSys.vo.OrderingVo;
-import com.mysql.cj.log.Log;
-import com.mysql.cj.log.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -26,11 +24,10 @@ public class OrderingController {
         this.orderingService = orderingService;
     }
 
-//    @RequestMapping(value = "/orderingSelectOne",method = RequestMethod.GET)
-//    public String getOrderingSelectOne(HttpSession session){
-//        return "/ordering/orderingSelectOne";
-//    }
-
+    @RequestMapping(value = "/orderList")
+    public String orderList(HttpSession session){
+        return "orderList";
+    }
 
     @PostMapping(value = "/selectOne")
     @ResponseBody
@@ -41,11 +38,11 @@ public class OrderingController {
         return Result.error(CodeMsg.OrderingSelectByPrimaryKey_ERROR);
     }
 
-    @PostMapping(value = "/select")
+    @GetMapping(value = "/selectAll")
     @ResponseBody
-    public Result<List<OrderingVo>> orderingSelect(@RequestBody Ordering record){
-        if (orderingService.OrderingSelect(record) != null){
-            return orderingService.OrderingSelect(record);
+    public Result<List<OrderingVo>> orderingSelectAll(){
+        if (orderingService.OrderingSelectAll() != null){
+            return orderingService.OrderingSelectAll();
         }
         return Result.error(CodeMsg.OrderingSelect_ERROR);
     }
@@ -54,5 +51,22 @@ public class OrderingController {
     @ResponseBody
     public CodeMsg orderingUpdate(@RequestBody Ordering record) {
         return orderingService.OrderingUpdateByPrimaryKeySelective(record);
+    }
+
+    //该方法在前台不会直接调用
+    //该方法是实现中间表的新增，中间表新增一定要是orderForm新增时才会用
+    //保留API
+    @PostMapping(value = "/insert")
+    @ResponseBody
+    public CodeMsg orderingInsert(@RequestBody Ordering record){
+        return orderingService.OrderingInsertSelective(record);
+    }
+    //该方法在前台不会直接调用
+    //该方法是实现中间表的删除，中间表删除一定要是orderForm删除时才会用
+    //保留API
+    @PostMapping(value = "/delete")
+    @ResponseBody
+    public CodeMsg orderingDelete(@RequestBody Object key){
+        return orderingService.OrderingDeleteByPrimaryKey(key);
     }
 }
