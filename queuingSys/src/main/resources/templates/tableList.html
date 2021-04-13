@@ -1,0 +1,196 @@
+
+
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>tableList</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <script th:src="@{/static/layui.js}" charset="utf-8"></script>
+    <link rel="stylesheet" th:href="@{/static/css/layui.css}">
+
+</head>
+
+<body>
+
+<table class="layui-table" id="tableList" lay-filter="tableList"></table>
+
+<div class="site-text" style="margin: 5%; display: none" id="window"  >
+    <form class="layui-form" id="tableForm" method="post" lay-filter="tableForm">
+        <div class="layui-form-item">
+            <label class="layui-form-label">桌子id</label>
+            <div class="layui-input-block">
+                <input type="text" id="tableId" name="tableId" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">桌子类型</label>
+            <div class="layui-input-block">
+                <input type="text" id="tableType" name="tableType" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">桌子编号</label>
+            <div class="layui-input-block">
+                <input type="text" id="tableIndex" name="tableIndex" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">使用状态</label>
+            <div class="layui-input-block">
+                <input type="text" id="usingStatus" name="usingStatus" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+<script type="text/html" id="toolbarOfTable">
+    <div className="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+    </div>
+</script>
+
+<script type="text/html" id="barOfOrdering">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script>
+    layui.use(['table','layer','form'], function(){
+        var table = layui.table;
+        var layer = layui.layer;
+        var form = layui.form;
+        var $ = layui.$;
+
+        table.render({
+            elem: '#tableList'
+            ,url: '/table/selectAll'
+            ,toolbar: '#toolbarOfTable' //开启头部工具栏，并为其绑定左侧模板
+            ,defaultToolbar: ['exports', 'print']
+            ,page: false
+            ,cols: [
+                [
+                    {type: 'checkbox', fixed: 'left'}
+                    ,{field: 'tableId', title: '桌子id', sort: true,align: 'center', fixed: 'left'}
+                    ,{field: 'tableType', title: '桌子类型',  sort: true,align: 'center',minWidth: 160}
+                    ,{field: 'tableIndex', title: '桌子编号',align: 'center',  sort: true}
+                    ,{field: 'usingStatus', title: '使用状态',align: 'center'}
+                    ,{fixed: 'right', title:'操作', toolbar: '#barOfOrdering', width:150}
+                ]
+            ]
+        });
+
+        //头工具栏事件
+        table.on('toolbar(tableList)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                    break;
+            }
+        });
+
+        table.on('tool(tableList)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'del'){
+                layer.open({
+                    type:1
+                    ,skin: 'layui-layer-molv'
+                    ,area: ['350px', '350px']
+                    ,title: ['再次确定删除操作','font-size:18px']
+                    ,btn: ['确定', '取消']
+                    ,shadeClose: true
+                    ,shade: 0 //遮罩透明度
+                    ,maxmin: true //允许全屏最小化
+                    ,content: $("#window")
+                    ,success:function (layero, index) {
+                        $('#tableId').val(data.tableId);
+                        $("#tableId").addClass('layui-disabled');
+
+                        $('#tableType').val(data.tableType);
+                        $('#tableIndex').val(data.tableIndex);
+                        $('#usingStatus').val(data.usingStatus);
+
+                    },yes:function (index, layero) {
+                        var dataJson = form.val("tableForm");
+                        console.log(JSON.stringify(dataJson));
+                        $.ajax({
+                            url: "/table/delete",
+                            type: "post",
+                            data: JSON.stringify(dataJson),
+                            dataType: "json",
+                            contentType: "application/json",
+
+                            success: function (data) {
+                                if (data.code == 208){
+                                    obj.del();
+                                    layer.close(index)
+                                }
+                            }
+
+                        })
+
+                    }
+
+                });
+            } else if(obj.event === 'edit'){
+                //需要动态加载出一个弹出层
+                //写入选中的对应行的json数据信息
+                //将可以修改的部分转换成表单数据
+                //提交后调用update对数据进行修改
+                layer.open({
+                    type: 1
+                    ,skin: 'layui-layer-molv'
+                    ,area: ['350px', '350px']
+                    ,title: ['编辑预定订单信息','font-size:18px']
+                    ,btn: ['确定', '取消']
+                    ,shadeClose: true
+                    ,shade: 0 //遮罩透明度
+                    ,maxmin: true //允许全屏最小化
+                    ,content: $("#window")
+                    ,success:function (layero, index){
+                        $('#tableId').val(data.tableId);
+                        $("#tableId").addClass('layui-disabled');
+                        $('#tableType').val(data.tableType);
+                        $('#tableIndex').val(data.tableIndex);
+                        $('#usingStatus').val(data.usingStatus);
+
+                    },yes:function (index, layero) {
+                        var dataJson = form.val("tableForm");
+                        console.log(JSON.stringify(dataJson));
+                        $.ajax({
+                            url: "/table/delete",
+                            type: "post",
+
+                            data: JSON.stringify(dataJson),
+                            dataType: "json",
+                            contentType: "application/json",
+
+                            success: function (result) {
+                                table.reload('tableList')}
+                        });
+                        layer.closeAll();
+                    }
+                })
+
+            }
+        });
+
+
+
+
+    });
+
+</script>
+</body>
+</html>

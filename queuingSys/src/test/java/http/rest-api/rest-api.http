@@ -5,16 +5,16 @@ Cache-Control: no-cache
 Content-Type: application/json
 
 {
-    "orderCode": 1
+    "orderCode": 6
 }
 
 ### 查询所有预定订单
-POST http://localhost:8081/ordering/selectAll
+GET http://localhost:8081/ordering/selectAll
 Accept: application/json
 Cache-Control: no-cache
 Content-Type: application/json
 
-### update预定订单
+### update预定中间表订单
 POST http://localhost:8081/ordering/update
 Accept: application/json
 Cache-Control: no-cache
@@ -25,3 +25,37 @@ Content-Type: application/json
     "guestId" : 4
 }
 
+
+### update预定订单
+POST http://localhost:8081/orderForm/update
+Accept: application/json
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "orderCode": "14",
+  "lastName": "龚",
+  "gender": "先生",
+  "orderTime": "2021-04-12T02:06:02.000+00:00",
+  "phoneNumber": "13224011982",
+  "guestNumber": "7",
+  "guestId": "12",
+  "orderStatus": "预定成功"
+}
+
+### 登录方法
+POST http://localhost:8081/userLogin
+Accept: application/json
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "id" : "1",
+  "password" : "123"
+}
+
+### 获取所有table信息
+GET http://localhost:8081/table/selectAll
+Accept: application/json
+Cache-Control: no-cache
+Content-Type: application/json

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.EnableLoadTimeWeaving;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
@@ -53,5 +54,10 @@ class TableOfHallServiceTest {
     void tableDeleteByPrimaryKey() {
         int id = 5;
         System.out.println(tableOfHallService.tableDeleteByPrimaryKey(id));
+    }
+
+    @Test
+    void tableSelectAll(){
+        System.out.println(tableOfHallService.tableSelectAll());
     }
 }

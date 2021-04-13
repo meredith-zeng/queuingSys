@@ -40,7 +40,8 @@ public class OrderingController {
 
     @GetMapping(value = "/selectAll")
     @ResponseBody
-    public Result<List<OrderingVo>> orderingSelectAll(){
+    public Result<List<OrderingVo>> orderingSelectAll(@RequestParam(defaultValue = "1") int page,
+                                                      @RequestParam(defaultValue = "10") int limit){
         if (orderingService.OrderingSelectAll() != null){
             return orderingService.OrderingSelectAll();
         }

@@ -35,6 +35,7 @@ public class OrderFormServiceImpl implements OrderFormService {
                 orderFormVo.setOrderCode(orderFormList.get(i).getOrderCode());
                 orderFormVo.setOrderTime(orderFormList.get(i).getOrderTime());
                 orderFormVo.setOrderStatus(orderFormList.get(i).getOrderStatus());
+                orderFormVo.setGuestNumber(orderFormList.get(i).getGuestNumber());
                 orderFormVoList.add(i,orderFormVo);
             }
             return Result.success(orderFormVoList);
@@ -53,6 +54,7 @@ public class OrderFormServiceImpl implements OrderFormService {
                 orderFormVo.setOrderCode(orderFormList.get(i).getOrderCode());
                 orderFormVo.setOrderTime(orderFormList.get(i).getOrderTime());
                 orderFormVo.setOrderStatus(orderFormList.get(i).getOrderStatus());
+                orderFormVo.setGuestNumber(orderFormList.get(i).getGuestNumber());
                 orderFormVoList.add(i,orderFormVo);
             }
             return Result.success(orderFormVoList);
@@ -66,9 +68,12 @@ public class OrderFormServiceImpl implements OrderFormService {
         if (orderForm != null){
             OrderFormVo orderFormVo = new OrderFormVo();
             orderFormVo.setGuestId(orderForm.getGuestId());
+
             orderFormVo.setOrderCode(orderForm.getOrderCode());
+
             orderFormVo.setOrderTime(orderForm.getOrderTime());
             orderFormVo.setOrderStatus(orderForm.getOrderStatus());
+            orderFormVo.setGuestNumber(orderForm.getGuestNumber());
             return Result.success(orderFormVo);
         }
         return Result.error(CodeMsg.OrderFormSelectByPrimaryKey_ERROR);

@@ -1,5 +1,6 @@
 package com.ahzeng.queuingSys.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 
@@ -15,12 +16,15 @@ public class QueuingForm {
     private Integer queuingOrderId;
 
     @Column
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     private Date queuingBeginTime;
     @Column
     private Integer queuingStatus;
     @Column
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     private Date predictQueuingTime;
     @Column
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     private Date actualArriveTime;
     @Column
     private Integer guestNumber;

@@ -19,4 +19,6 @@ public interface TableOfHallService {
     //根据主键删除桌子
     CodeMsg tableDeleteByPrimaryKey(Object key);
 
+    Result<List<TableVo>> tableSelectAll();
+
 }

@@ -74,6 +74,19 @@ public class CodeMsg {
     public static final CodeMsg OrderingDeleteByPrimaryKey_SUCCESS = new CodeMsg(608, "根据主键删除预定中间表表项成功");
     public static final CodeMsg OrderingDeleteByPrimaryKey_ERROR = new CodeMsg(609, "根据主键删除预定中间表表项失败");
 
+    //排队订单管理模块
+    public static final CodeMsg QueuingFormSelect_SUCCESS = new CodeMsg(700, "按条件查询排队订单成功");
+    public static final CodeMsg QueuingFormSelect_ERROR = new CodeMsg(701, "按条件查询排队订单失败");
+    public static final CodeMsg QueuingFormSelectAll_SUCCESS = new CodeMsg(702, "查询所有排队订单成功");
+    public static final CodeMsg QueuingFormSelectAll_ERROR = new CodeMsg(703, "查询所有排队订单失败");
+    public static final CodeMsg QueuingFormSelectByPrimaryKey_SUCCESS = new CodeMsg(704, "根据id查询排队订单成功");
+    public static final CodeMsg QueuingFormSelectByPrimaryKey_ERROR = new CodeMsg(705, "根据id查询排队订单失败");
+    public static final CodeMsg QueuingFormUpdateByPrimaryKeySelective_SUCCESS = new CodeMsg(706, "根据主键修改指定排队订单成功");
+    public static final CodeMsg QueuingFormUpdateByPrimaryKeySelective_ERROR = new CodeMsg(707, "根据主键修改指定排队订单失败");
+    public static final CodeMsg QueuingFormInsertSelective_SUCCESS = new CodeMsg(708, "新增排队订单成功");
+    public static final CodeMsg QueuingFormInsertSelective_ERROR = new CodeMsg(709, "新增排队订单失败");
+    public static final CodeMsg QueuingFormDeleteByPrimaryKey_SUCCESS = new CodeMsg(710, "根据主键删除排队订单成功");
+    public static final CodeMsg QueuingFormDeleteByPrimaryKey_ERROR = new CodeMsg(711, "根据主键删除排队订单失败");
 
 
     private CodeMsg(int code, String msg) {

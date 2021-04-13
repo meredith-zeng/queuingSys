@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="x-admin-sm" lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>阿曾的烤肉店后台管理</title>
@@ -9,7 +9,6 @@
 
 
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" th:href="@{/static/css/font.css}">
     <link rel="stylesheet" th:href="@{/static/css/layui.css}">
 
 </head>
@@ -26,11 +25,11 @@
                     <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img">
                     店员
                 </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">修改信息</a></dd>
-                </dl>
+<!--                <dl class="layui-nav-child">-->
+<!--                    <dd><a>查看信息</a></dd>-->
+<!--                </dl>-->
             </li>
-            <li class="layui-nav-item"><a href="">登出</a></li>
+            <div class="layui-nav-item" onclick="logOut()">登出</div>
         </ul>
     </div>
 
@@ -41,21 +40,21 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;"><i class="fa fa-user-circle-o fa-lg"></i> <span >查看排队报表</span></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;"><i class="fa fa-list fa-lg"></i> <span >人均排队时间</span></a></dd>
-                        <dd><a href="javascript:;"><i class="fa fa-clipboard fa-lg"></i> <span >每日排队数</span></a></dd>
+                        <dd><a href="@{/ordering/orderList}"><i class="fa fa-list fa-lg"></i> <span >人均排队时间</span></a></dd>
+                        <dd><a href="@{/ordering/orderList}"><i class="fa fa-clipboard fa-lg"></i> <span >每日排队数</span></a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="fa fa-vcard fa-lg"></i> <span >进行叫号操作</span></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;"><i class="fa fa-th-list fa-lg"></i> <span >叫号</span></a></dd>
+                        <dd><a href="@{/ordering/orderList}"><i class="fa fa-th-list fa-lg"></i> <span >叫号</span></a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="fa fa-diamond fa-lg"></i> <span >管理排队</span></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;"><i class="fa fa-address-book fa-lg"></i> <span >确定预定状态</span></a></dd>
-                        <dd><a href="javascript:;"><i class="fa fa-check-square fa-lg"></i> <span >修改桌位数量</span></a></dd>
+                        <dd><a href="/ordering/orderList"><i class="fa fa-address-book fa-lg"></i> <span >确定预定状态</span></a></dd>
+                        <dd><a href="/table/tableList"><i class="fa fa-check-square fa-lg"></i> <span >修改桌位数量</span></a></dd>
                     </dl>
                 </li>
             </ul>
@@ -69,12 +68,9 @@
                 <li class="home">
                     <i class="layui-icon">&#xe68e;</i>烤肉超棒</li>
             </ul>
-            <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
-                    <iframe th:src="@{/ordering/orderList}" frameborder="0" id="demoAdmin" style="width: 100%; height: 300px; border-radius: 2px;"></iframe>
+                    <iframe src="/login" frameborder="0" id="iframeMainContent" style="width: 100%; height: 595px; border-radius: 2px;"></iframe>
                 </div>
-            </div>
-            <div id="tab_show"></div>
         </div>
     </div>
 
@@ -122,6 +118,19 @@
             });
             isShow =true;
         }
+    });
+
+    function logOut(){
+        $(window).attr("location","/login");
+        window.returnValue=false;
+
+    }
+
+    $(document).ready(function () {
+        $("dd>a").click(function (e) {
+            e.preventDefault();
+            $("#iframeMainContent").attr("src",$(this).attr("href"));
+        });
     });
 </script>
 

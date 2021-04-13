@@ -17,6 +17,26 @@ import java.util.List;
 public class TableOfHallServiceImpl implements TableOfHallService {
     @Autowired
     private TableOfHallMapper tableOfHallMapper;
+
+    @Override
+    public Result<List<TableVo>> tableSelectAll() {
+        List<TableOfHall> tableOfHallList = tableOfHallMapper.selectAll();
+        if (tableOfHallList.size() > 0){
+            List<TableVo> tableVoList = new LinkedList<>();
+            for(int i = 0; i < tableOfHallList.size();i++){
+                TableVo tableVo = new TableVo();
+                tableVo.setTableIndex(tableOfHallList.get(i).getTableIndex());
+                tableVo.setTableId(tableOfHallList.get(i).getTableId());
+                tableVo.setTableType(tableOfHallList.get(i).getTableType());
+
+                tableVo.setUsingStatus(tableOfHallList.get(i).getUsingStatus());
+
+                tableVoList.add(i, tableVo);
+            }
+            return Result.success(tableVoList);
+        }
+        return Result.error(CodeMsg.tableSelect_ERROR);
+    }
     //按条件查询桌子
     @Override
     public Result<List<TableVo>> tableSelect(TableOfHall record) {
@@ -28,8 +48,9 @@ public class TableOfHallServiceImpl implements TableOfHallService {
                 tableVo.setTableIndex(tableOfHallList.get(i).getTableIndex());
                 tableVo.setTableId(tableOfHallList.get(i).getTableId());
                 tableVo.setTableType(tableOfHallList.get(i).getTableType());
-                //暂时未实现该跨表功能，暂时全部用未占用代替
-                tableVo.setUsingStatus(0);
+
+                tableVo.setUsingStatus(tableOfHallList.get(i).getUsingStatus());
+
                 tableVoList.add(i, tableVo);
             }
             return Result.success(tableVoList);
@@ -45,8 +66,9 @@ public class TableOfHallServiceImpl implements TableOfHallService {
             tableVo.setTableType(tableOfHall.getTableType());
             tableVo.setTableId(tableOfHall.getTableId());
             tableVo.setTableIndex(tableOfHall.getTableIndex());
-            //暂时未实现该跨表功能，暂时全部用未占用代替
-            tableVo.setUsingStatus(0);
+
+            tableVo.setUsingStatus(tableOfHall.getUsingStatus());
+
             return Result.success(tableVo);
         }
         return Result.error(CodeMsg.tableSelectByPrimaryKey_ERROR);

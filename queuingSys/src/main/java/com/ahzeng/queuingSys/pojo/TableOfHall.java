@@ -19,6 +19,6 @@ public class TableOfHall {
     @Column
     private String tableIndex;
     @Column
-    private Integer usingStatus;
+    private String usingStatus;
 
 }

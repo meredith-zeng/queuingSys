@@ -1,5 +1,6 @@
 package com.ahzeng.queuingSys.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 
@@ -15,10 +16,13 @@ public class OrderForm {
     private Integer orderCode;
 
     @Column
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     private Date orderTime;
     @Column
     private String orderStatus;
     @Column
     private Integer guestId;
+    @Column
+    private Integer guestNumber;
 
 }

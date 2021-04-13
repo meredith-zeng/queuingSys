@@ -83,12 +83,14 @@ public class OrderingServiceImpl implements OrderingService {
                 orderingVo.setOrderCode(orderFormVo.getOrderCode());
                 orderingVo.setOrderTime(orderFormVo.getOrderTime());
                 orderingVo.setOrderStatus(orderFormVo.getOrderStatus());
+                orderingVo.setGuestNumber(orderFormVo.getGuestNumber());
 
                 orderingVo.setGuestId(orderFormVo.getGuestId());
 
                 orderingVo.setGender(guestVo.getGender());
                 orderingVo.setPhoneNumber(guestVo.getPhoneNumber());
                 orderingVo.setLastName(guestVo.getLastName());
+
                 orderingVoList.add(i,orderingVo);
             }
             return Result.success(orderingVoList);
@@ -109,6 +111,7 @@ public class OrderingServiceImpl implements OrderingService {
             orderingVo.setOrderCode(orderFormVo.getOrderCode());
             orderingVo.setOrderTime(orderFormVo.getOrderTime());
             orderingVo.setOrderStatus(orderFormVo.getOrderStatus());
+            orderingVo.setGuestNumber(orderFormVo.getGuestNumber());
 
             orderingVo.setGuestId(orderFormVo.getGuestId());
 

@@ -13,6 +13,6 @@ public class TableVo {
 //    桌子编号
     private String tableIndex;
 //    桌子使用状态
-    private Integer usingStatus;
+    private String usingStatus;
 
 }

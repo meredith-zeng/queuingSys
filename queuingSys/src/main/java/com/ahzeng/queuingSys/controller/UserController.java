@@ -8,23 +8,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class UserController {
     @Autowired
     WorkerService workerService;
 
-    @ResponseBody
+    @RequestMapping("/index")
+    public String index(){
+        return "index";
+    }
+
     @RequestMapping(value = "/login")
     public String login(){
-        return "login";
+        return "/login";
     }
 
-    @PostMapping("/login")
-    public String userLogin(@RequestBody Worker worker) {
+    @RequestMapping("/userLogin")
+    @ResponseBody
+    public CodeMsg userLogin(@RequestBody Worker worker) {
         if (workerService.loginVerify(worker).equals(CodeMsg.Login_SUCCESS)){
-            return "index";
+            return CodeMsg.Login_SUCCESS;
         }
-        return "login";
+        return CodeMsg.Login_ERROR;
     }
-
+    @RequestMapping(value = "/logOut")
+    public String logOut(){
+        return "/index";
+    }
 }
