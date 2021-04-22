@@ -24,5 +24,7 @@ public class OrderForm {
     private Integer guestId;
     @Column
     private Integer guestNumber;
+    @Column
+    private String phoneNumber;
 
 }

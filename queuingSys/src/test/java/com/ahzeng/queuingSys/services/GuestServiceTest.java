@@ -54,4 +54,11 @@ GuestService guestService;
     void guestDeleteByPrimaryKey() {
         System.out.println(guestService.GuestDeleteByPrimaryKey(7));
     }
+
+    @Test
+    void GuestLoginVerify(){
+        Guest guest = new Guest();
+        guest.setPhoneNumber("13883950171");
+        System.out.println(guestService.GuestLoginVerify(guest));
+    }
 }

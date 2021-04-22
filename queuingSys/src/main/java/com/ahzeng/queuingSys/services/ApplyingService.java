@@ -15,7 +15,7 @@ public interface ApplyingService {
     //根据id查询排队中间表
     Result<ApplyingVo> ApplyingSelectByPrimaryKey(int id);
     //根据主键修改指定排队中间表
-    CodeMsg ApplyingUpdateByPrimaryKeySelective(Applying record);
+    CodeMsg ApplyingUpdateByPrimaryKey(Applying record);
     //新增排队中间表
     CodeMsg ApplyingInsertSelective(Applying record);
     //根据主键删除排队中间表

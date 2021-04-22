@@ -14,12 +14,14 @@ public class QueuingForm {
     @Id
     @KeySql(useGeneratedKeys = true)
     private Integer queuingOrderId;
+    @Column
+    private Integer guestId;
 
     @Column
     @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     private Date queuingBeginTime;
     @Column
-    private Integer queuingStatus;
+    private String queuingStatus;
     @Column
     @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     private Date predictQueuingTime;
@@ -28,6 +30,7 @@ public class QueuingForm {
     private Date actualArriveTime;
     @Column
     private Integer guestNumber;
-
+    @Column
+    private String phoneNumber;
 
 }

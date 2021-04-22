@@ -2,7 +2,7 @@
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>orderList</title>
+    <title>叫号</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -14,74 +14,68 @@
 
 <body>
 <fieldset class="layui-elem-field layui-field-title">
-    <legend>预定订单</legend>
+    <legend>排队订单</legend>
 </fieldset>
 <div class="layui-bg-gray">
-    <table class="layui-table" id="orderList" lay-filter="orderList"></table>
+    <table class="layui-table" id="queuingList" lay-filter="queuingList"></table>
 </div>
 
 <div class="site-text" style="margin: 5%; display: none" id="window"  >
-    <form class="layui-form" id="OrderForm" method="post" lay-filter="OrderForm">
+    <form class="layui-form" id="queuingForm" method="post" lay-filter="queuingForm">
         <div class="layui-form-item">
-            <label class="layui-form-label">预定单号</label>
+            <label class="layui-form-label">排队单号</label>
             <div class="layui-input-block">
-                <input type="text" id="orderCode" name="orderCode" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
+                <input type="text" id="queuingOrderId" name="queuingOrderId" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">姓氏</label>
+            <label class="layui-form-label">开始排队时间</label>
             <div class="layui-input-block">
-                <input type="text" id="lastName" name="lastName" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
+                <input type="text" id="queuingBeginTime" name="queuingBeginTime" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">性别</label>
-            <div class="layui-input-block">
-                <input type="text" id="gender" name="gender" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">预定时间</label>
-            <div class="layui-input-block">
-                <input type="text" id="orderTime" name="orderTime" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">手机号</label>
-            <div class="layui-input-block">
-                <input type="text" id="phoneNumber" name="phoneNumber" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
-            </div>
-        </div>
+
+
         <div class="layui-form-item">
             <label class="layui-form-label">就餐人数</label>
             <div class="layui-input-block">
                 <input type="text" id="guestNumber" name="guestNumber" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
             </div>
         </div>
+
         <div class="layui-form-item">
-            <label class="layui-form-label">顾客编号</label>
+            <label class="layui-form-label">手机号</label>
             <div class="layui-input-block">
-                <input type="text" id="guestId" name="guestId" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
+                <input type="text" id="phoneNumber" name="phoneNumber" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
             </div>
         </div>
 
-
         <div class="layui-form-item">
-            <label class="layui-form-label">预定状态</label>
+            <label class="layui-form-label">姓氏</label>
             <div class="layui-input-block">
-                <select  id="orderStatus" name="orderStatus" lay-verify="title" >
-                    <option value=""></option>
-                    <option value="待处理">正空闲</option>
-                    <option value="预定成功">预定成功</option>
-                    <option value="预定失败">预定失败</option>
-                </select>
+                <input type="text" id="lastName" name="lastName" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
             </div>
         </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+                <input type="text" id="gender" name="gender" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">排队状态</label>
+            <div class="layui-input-block">
+                <input type="text" id="queuingStatus" name="queuingStatus" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
+            </div>
+        </div>
+
     </form>
 </div>
 
 
-<script type="text/html" id="toolbarOfOrdering">
+<script type="text/html" id="toolbarOfQueuing">
     <div className="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
         <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
@@ -100,31 +94,29 @@
         var form = layui.form;
         var $ = layui.$;
 
-
         table.render({
-            elem: '#orderList'
-            ,url: '/ordering/selectAll'
-            ,toolbar: '#toolbarOfOrdering' //开启头部工具栏，并为其绑定左侧模板
+            elem: '#queuingList'
+            ,url: '/queuingForm/selectAll'
+            ,toolbar: '#toolbarOfQueuing' //开启头部工具栏，并为其绑定左侧模板
             ,defaultToolbar: ['exports', 'print']
             ,page: false
             ,cols: [
                 [
                     {type: 'checkbox', fixed: 'left'}
-                    ,{field: 'orderCode', title: '订单号', sort: true,align: 'center', fixed: 'left'}
-                    ,{field: 'orderTime', title: '预定时间',  sort: true,align: 'center',minWidth: 160}
-                    ,{field: 'orderStatus', title: '预定状态',align: 'center',  sort: true}
-                    ,{field: 'guestId', title: '顾客编号',align: 'center'}
+                    ,{field: 'queuingOrderId', title: '排队单号', sort: true,align: 'center', fixed: 'left'}
+                    ,{field: 'queuingBeginTime', title: '排队开始时间', minWidth:160, align: 'center',  sort: true}
+                    ,{field: 'guestNumber', title: '就餐人数',align: 'center'}
                     ,{field: 'phoneNumber', title: '手机号',align: 'center'}
                     ,{field: 'lastName', title: '姓氏',align: 'center'}
                     ,{field: 'gender', title: '性别',align: 'center'}
-                    ,{field: 'guestNumber', title: '就餐人数',align: 'center'}
+                    ,{field: 'queuingStatus', title: '排队状态',align: 'center'}
                     ,{fixed: 'right', title:'操作', toolbar: '#barOfOrdering', width:150}
                 ]
             ]
         });
 
         //头工具栏事件
-        table.on('toolbar(orderList)', function(obj){
+        table.on('toolbar(queuingList)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
                 case 'getCheckLength':
@@ -137,13 +129,13 @@
             }
         });
 
-        table.on('tool(orderList)', function(obj){
+        table.on('tool(queuingList)', function(obj){
             var data = obj.data;
             if(obj.event === 'del'){
                 layer.open({
                     type:1
                     ,skin: 'layui-layer-molv'
-                    ,area: ['350px', '500px']
+                    ,area: ['350px', '400px']
                     ,title: ['再次确定删除操作','font-size:18px']
                     ,btn: ['确定', '取消']
                     ,shadeClose: true
@@ -151,46 +143,32 @@
                     ,maxmin: true //允许全屏最小化
                     ,content: $("#window")
                     ,success:function (layero, index) {
-                        $('#orderCode').val(data.orderCode);
-                        $("#orderCode").addClass('layui-disabled');
-
-                        $('#orderTime').val(data.orderTime);
-                        $("#orderTime").addClass('layui-disabled');
-
-
-                        $('#lastName').val(data.lastName);
-                        $("#lastName").attr("disabled","disabled").addClass('layui-disabled');
-
-                        $('#gender').val(data.gender);
-                        $("#gender").addClass('layui-disabled');
-
-
-                        $('#orderStatus').val(data.orderStatus);
-                        $("#orderStatus").addClass('layui-disabled');
-
-                        $('#guestId').val(data.guestId);
-                        $("#guestId").addClass('layui-disabled');
+                        $('#queuingOrderId').val(data.queuingOrderId);
+                        $("#queuingOrderId").addClass('layui-disabled');
 
                         $('#phoneNumber').val(data.phoneNumber);
                         $("#phoneNumber").addClass('layui-disabled');
 
-                        $('#guestNumber').val(data.guestNumber);
-                        $("#guestNumber").addClass('layui-disabled');
+                        $('#lastName').val(data.lastName);
+                        $("#lastName").addClass('layui-disabled');
+
+                        $('#gender').val(data.gender);
+                        $("#gender").addClass('layui-disabled');
 
                     },yes:function (index, layero) {
-                        var dataJson = form.val("OrderForm");
+                        var dataJson = form.val("queuingForm");
                         console.log(JSON.stringify(dataJson));
                         $.ajax({
-                            url: "/orderForm/delete",
+                            url: "/queuingForm/delete",
                             type: "post",
                             data: JSON.stringify(dataJson),
                             dataType: "json",
                             contentType: "application/json",
 
                             success: function (data) {
-                                if (data.code == 508){
+                                if (data.code == 710){
                                     obj.del();
-                                    layer.close(index)
+                                    layer.close(index);
                                 }
                             }
 
@@ -207,45 +185,44 @@
                 layer.open({
                     type: 1
                     ,skin: 'layui-layer-molv'
-                    ,area: ['350px', '500px']
-                    ,title: ['编辑预定订单信息','font-size:18px']
+                    ,area: ['350px', '400px']
+                    ,title: ['叫号','font-size:18px']
                     ,btn: ['确定', '取消']
                     ,shadeClose: true
                     ,shade: 0 //遮罩透明度
                     ,maxmin: true //允许全屏最小化
                     ,content: $("#window")
                     ,success:function (layero, index){
-                        $('#orderCode').val(data.orderCode);
-                        $("#orderCode").addClass('layui-disabled');
+                        $('#queuingOrderId').val(data.queuingOrderId);
+                        $("#queuingOrderId").addClass('layui-disabled');
 
-                        $('#orderTime').val(data.orderTime);
-                        $("#orderTime").addClass('layui-disabled');
+                        $('#queuingBeginTime').val(data.queuingBeginTime);
+                        $("#queuingBeginTime").addClass('layui-disabled');
 
 
+                        $('#actualArriveTime').val(data.actualArriveTime);
+                        $("#actualArriveTime").addClass('layui-disabled');
+
+                        $('#guestNumber').val(data.guestNumber);
+                        $("#guestNumber").addClass('layui-disabled');
+
+                        $('#phoneNumber').val(data.phoneNumber);
+                        $("#phoneNumber").addClass('layui-disabled');
 
                         $('#lastName').val(data.lastName);
-                        $("#lastName").attr("disabled","disabled").addClass('layui-disabled');
+                        $("#lastName").addClass('layui-disabled');
 
                         $('#gender').val(data.gender);
                         $("#gender").addClass('layui-disabled');
 
 
-                        $('#orderStatus').val(data.orderStatus);
-
-                        $('#guestId').val(data.guestId);
-                        $("#guestId").addClass('layui-disabled');
-
-                        $('#phoneNumber').val(data.phoneNumber);
-                        $("#phoneNumber").addClass('layui-disabled');
-
-                        $('#guestNumber').val(data.guestNumber);
-                        $("#guestNumber").addClass('layui-disabled');
+                        $('#queuingStatus').val(data.queuingStatus);
 
                     },yes:function (index, layero) {
-                        var dataJson = form.val("OrderForm");
+                        var dataJson = form.val("queuingForm");
                         console.log(JSON.stringify(dataJson));
                         $.ajax({
-                            url: "/orderForm/update",
+                            url: "/queuingForm/update",
                             type: "post",
 
                             data: JSON.stringify(dataJson),
@@ -253,7 +230,7 @@
                             contentType: "application/json",
 
                             success: function (result) {
-                                table.reload('orderList')}
+                                table.reload('queuingList')}
                         });
                         layer.closeAll();
                     }

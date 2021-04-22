@@ -5,7 +5,7 @@ Cache-Control: no-cache
 Content-Type: application/json
 
 {
-    "orderCode": 6
+    "orderCode": 3
 }
 
 ### 查询所有预定订单
@@ -59,3 +59,13 @@ GET http://localhost:8081/table/selectAll
 Accept: application/json
 Cache-Control: no-cache
 Content-Type: application/json
+
+### 排队数据测试
+POST http://localhost:8081/queuingExcel/queuingNumber
+Accept: application/json
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+    "dateId" : 1
+}

@@ -1,8 +1,10 @@
 package com.ahzeng.queuingSys.services.impl;
 
 import com.ahzeng.queuingSys.mapper.OrderFormMapper;
+import com.ahzeng.queuingSys.pojo.Guest;
 import com.ahzeng.queuingSys.pojo.OrderForm;
 import com.ahzeng.queuingSys.pojo.Ordering;
+import com.ahzeng.queuingSys.services.GuestService;
 import com.ahzeng.queuingSys.services.OrderFormService;
 import com.ahzeng.queuingSys.services.OrderingService;
 import com.ahzeng.queuingSys.utils.CodeMsg;
@@ -22,6 +24,9 @@ public class OrderFormServiceImpl implements OrderFormService {
 
     @Autowired
     OrderingService orderingService;
+
+    @Autowired
+    GuestService guestService;
 
     //按条件查询预定订单，不传参就是返回全部内容
     @Override

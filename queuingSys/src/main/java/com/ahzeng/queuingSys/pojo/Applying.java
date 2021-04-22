@@ -3,6 +3,8 @@ package com.ahzeng.queuingSys.pojo;
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,7 +12,8 @@ import javax.persistence.Table;
 @Table(name = "Applying")
 public class Applying {
 
-    private String queuingOrderId;
+    @Id
+    private Integer queuingOrderId;
 
     private Integer guestId;
 

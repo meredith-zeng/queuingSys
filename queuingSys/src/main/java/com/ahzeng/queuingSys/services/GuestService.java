@@ -18,4 +18,6 @@ public interface GuestService {
     CodeMsg GuestInsertSelective(Guest record);
     //根据主键删除顾客
     CodeMsg GuestDeleteByPrimaryKey(Object key);
+    //顾客登录验证
+    CodeMsg GuestLoginVerify(Guest record);
 }

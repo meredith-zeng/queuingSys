@@ -20,7 +20,17 @@ import java.util.List;
 @RequestMapping("/table")
 public class TableOfHallController {
     private TableOfHallService tableOfHallService;
-
+    /**
+     * 已经实现的业务方法：
+     * 1. /table/selectAll
+     * 2. /table/select
+     * 3. /table/update
+     * 4. /table/delete
+     *
+     * 未实现：
+     *    *  /table/selectByPrimaryKey
+     *    *  /table/insertSelective
+     */
     @Autowired
     public void setTableOfHallController(TableOfHallService tableOfHallServicee){
         this.tableOfHallService = tableOfHallServicee;
@@ -31,9 +41,9 @@ public class TableOfHallController {
         return "tableList";
     }
 
-    @PostMapping(value = "/selectOne")
+    @PostMapping(value = "/select")
     @ResponseBody
-    public  Result<TableVo>  tableSelectOne(@RequestBody TableOfHall record){
+    public  Result<TableVo>  tableSelect(@RequestBody TableOfHall record){
         return tableOfHallService.tableSelectByPrimaryKey(record.getTableId());
     }
 
@@ -56,5 +66,11 @@ public class TableOfHallController {
     @ResponseBody
     public CodeMsg tableDelete(@RequestBody TableOfHall record) {
         return tableOfHallService.tableDeleteByPrimaryKey(record);
+    }
+
+    @PostMapping(value = "/insert")
+    @ResponseBody
+    public CodeMsg tableInsert(@RequestBody TableOfHall record) {
+        return tableOfHallService.tableInsertSelective(record);
     }
 }

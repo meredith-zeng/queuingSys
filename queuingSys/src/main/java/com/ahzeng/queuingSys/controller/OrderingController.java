@@ -18,14 +18,21 @@ public class OrderingController {
     //怎么写入log
     //报错private static final Log logger = LogFactory.getLog(SupplierController.class);
     private OrderingService orderingService;
-
+    /**
+     * 已经实现的业务方法：
+     * 1. /ordering/selectOne
+     * 2. /ordering/selectAll
+     * 3. /ordering/update
+     * 4. /ordering/insert
+     * 5. /ordering/delete
+     */
     @Autowired
     public void setOrderingController(OrderingService orderingService){
         this.orderingService = orderingService;
     }
 
     @RequestMapping(value = "/orderList")
-    public String orderList(HttpSession session){
+    public String orderList(){
         return "orderList";
     }
 
@@ -53,21 +60,21 @@ public class OrderingController {
     public CodeMsg orderingUpdate(@RequestBody Ordering record) {
         return orderingService.OrderingUpdateByPrimaryKeySelective(record);
     }
-
-    //该方法在前台不会直接调用
-    //该方法是实现中间表的新增，中间表新增一定要是orderForm新增时才会用
-    //保留API
-    @PostMapping(value = "/insert")
-    @ResponseBody
-    public CodeMsg orderingInsert(@RequestBody Ordering record){
-        return orderingService.OrderingInsertSelective(record);
-    }
-    //该方法在前台不会直接调用
-    //该方法是实现中间表的删除，中间表删除一定要是orderForm删除时才会用
-    //保留API
-    @PostMapping(value = "/delete")
-    @ResponseBody
-    public CodeMsg orderingDelete(@RequestBody Object key){
-        return orderingService.OrderingDeleteByPrimaryKey(key);
-    }
+//
+//    //该方法在前台不会直接调用
+//    //该方法是实现中间表的新增，中间表新增一定要是orderForm新增时才会用
+//    //保留API
+//    @PostMapping(value = "/insert")
+//    @ResponseBody
+//    public CodeMsg orderingInsert(@RequestBody Ordering record){
+//        return orderingService.OrderingInsertSelective(record);
+//    }
+//    //该方法在前台不会直接调用
+//    //该方法是实现中间表的删除，中间表删除一定要是orderForm删除时才会用
+//    //保留API
+//    @PostMapping(value = "/delete")
+//    @ResponseBody
+//    public CodeMsg orderingDelete(@RequestBody Object key){
+//        return orderingService.OrderingDeleteByPrimaryKey(key);
+//    }
 }

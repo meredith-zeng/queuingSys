@@ -1,33 +1,36 @@
 package com.ahzeng.queuingSys.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
 import java.util.Date;
 
-/**
- * @ClassName QueuingFormVo
- * @Description TODO
- * @Author lenovo
- * @Date 2021/4/13 12:39
- * @Version 1.0
- */
+@Data
 public class QueuingFormVo {
 
+    //QueuingForm自有字段
     private Integer queuingOrderId;
     private Integer guestId;
 
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date queuingBeginTime;
-
-    private Integer queuingStatus;
-
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-
     private Date predictQueuingTime;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date actualArriveTime;
 
+    private Integer guestNumber;
+
+    private String queuingStatus;
+
+
+    //guestId查询Guest组装
+    private String phoneNumber;
+
+    private String lastName;
+
+    private String gender;
 
 
 }

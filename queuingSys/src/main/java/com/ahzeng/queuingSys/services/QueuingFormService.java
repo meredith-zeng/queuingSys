@@ -11,7 +11,7 @@ public interface QueuingFormService {
     //按条件查询排队订单
     Result<List<QueuingFormVo>> QueuingFormSelect(QueuingForm record);
     //查询所有排队订单
-    Result<List<QueuingFormVo>> QueuingFormSelectAll(QueuingForm record);
+    Result<List<QueuingFormVo>> QueuingFormSelectAll();
     //根据id查询排队订单
     Result<QueuingFormVo> QueuingFormSelectByPrimaryKey(int id);
     //根据主键修改指定排队订单
@@ -19,6 +19,7 @@ public interface QueuingFormService {
     //新增排队订单
     CodeMsg QueuingFormInsertSelective(QueuingForm record);
     //根据主键删除排队订单
-    CodeMsg QueuingFormDeleteByPrimaryKey(Object key);
+    CodeMsg QueuingFormDeleteByPrimaryKey(QueuingForm record);
 
+    Result<Integer> countQueuingGuestNumber();
 }

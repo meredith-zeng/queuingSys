@@ -1,5 +1,6 @@
 package com.ahzeng.queuingSys.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 
@@ -12,12 +13,18 @@ import java.util.Date;
 public class QueuingExcel {
     @Id
     @KeySql(useGeneratedKeys = true)
-    private Integer dataId;
+    private Integer dateId;
 
     @Column
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
     private Date dataDate;
     @Column
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="HH:mm:ss")
     private Date averageTime;
     @Column
-    private Integer queuingNumber;
+    private Integer smallQueuingNumber;
+    @Column
+    private Integer middleQueuingNumber;
+    @Column
+    private Integer bigQueuingNumber;
 }

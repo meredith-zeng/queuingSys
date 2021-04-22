@@ -15,8 +15,12 @@
 </head>
 
 <body>
-
+<fieldset class="layui-elem-field layui-field-title">
+    <legend>桌子管理</legend>
+</fieldset>
+<div class="layui-bg-gray">
 <table class="layui-table" id="tableList" lay-filter="tableList"></table>
+</div>
 
 <div class="site-text" style="margin: 5%; display: none" id="window"  >
     <form class="layui-form" id="tableForm" method="post" lay-filter="tableForm">
@@ -38,10 +42,16 @@
                 <input type="text" id="tableIndex" name="tableIndex" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
             </div>
         </div>
+
+
         <div class="layui-form-item">
             <label class="layui-form-label">使用状态</label>
             <div class="layui-input-block">
-                <input type="text" id="usingStatus" name="usingStatus" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"/>
+                <select name="usingStatus" lay-filter="title"  id="usingStatus">
+                    <option value=""></option>
+                    <option value="正空闲">正空闲</option>
+                    <option value="已占用">已占用</option>
+                </select>
             </div>
         </div>
 
@@ -51,8 +61,8 @@
 
 <script type="text/html" id="toolbarOfTable">
     <div className="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">统计选中数目</button>
+        <button class="layui-btn layui-btn-sm" lay-event="insert">新增一张桌子</button>
     </div>
 </script>
 
@@ -94,12 +104,46 @@
                     var data = checkStatus.data;
                     layer.msg('选中了：'+ data.length + ' 个');
                     break;
-                case 'isAll':
-                    layer.msg(checkStatus.isAll ? '全选': '未全选');
-                    break;
+                case 'insert':
+                    layer.open({
+                        type:1
+                        ,skin: 'layui-layer-molv'
+                        ,area: ['350px', '350px']
+                        ,title: ['新增桌子','font-size:18px']
+                        ,btn: ['确定', '取消']
+                        ,shadeClose: true
+                        ,shade: 0 //遮罩透明度
+                        ,maxmin: true //允许全屏最小化
+                        ,content: $("#window")
+                        ,success:function (layero, index) {
+                            $('#tableId').val("新增后系统自动生成");
+                            $("#tableId").addClass('layui-disabled');
+
+                        },yes:function (index, layero) {
+                            var dataJson = form.val("tableForm");
+                            console.log(JSON.stringify(dataJson));
+                            $.ajax({
+                                url: "/table/insert",
+                                type: "post",
+                                data: JSON.stringify(dataJson),
+                                dataType: "json",
+                                contentType: "application/json",
+
+                                success: function (data) {
+                                    if (data.code == 204){
+                                        layer.close(index)
+                                    }
+                                }
+
+                            })
+
+                        }
+
+                    });
             }
         });
 
+        //侧边栏事件
         table.on('tool(tableList)', function(obj){
             var data = obj.data;
             if(obj.event === 'del'){
@@ -118,10 +162,18 @@
                         $("#tableId").addClass('layui-disabled');
 
                         $('#tableType').val(data.tableType);
+                        $("#tableType").addClass('layui-disabled');
+
                         $('#tableIndex').val(data.tableIndex);
-                        $('#usingStatus').val(data.usingStatus);
+                        $("#tableIndex").addClass('layui-disabled');
 
                     },yes:function (index, layero) {
+                        // //表单取值
+                        // layui.$('#LAY-component-form-getval').on('click', function(){
+                        //     var data = form.val('example');
+                        //     alert(JSON.stringify(data));
+                        // });
+                        //
                         var dataJson = form.val("tableForm");
                         console.log(JSON.stringify(dataJson));
                         $.ajax({
@@ -152,7 +204,7 @@
                     type: 1
                     ,skin: 'layui-layer-molv'
                     ,area: ['350px', '350px']
-                    ,title: ['编辑预定订单信息','font-size:18px']
+                    ,title: ['编辑桌子信息','font-size:18px']
                     ,btn: ['确定', '取消']
                     ,shadeClose: true
                     ,shade: 0 //遮罩透明度
@@ -169,7 +221,7 @@
                         var dataJson = form.val("tableForm");
                         console.log(JSON.stringify(dataJson));
                         $.ajax({
-                            url: "/table/delete",
+                            url: "/table/update",
                             type: "post",
 
                             data: JSON.stringify(dataJson),

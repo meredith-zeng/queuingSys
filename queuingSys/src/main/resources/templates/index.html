@@ -40,14 +40,14 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;"><i class="fa fa-user-circle-o fa-lg"></i> <span >查看排队报表</span></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="@{/ordering/orderList}"><i class="fa fa-list fa-lg"></i> <span >人均排队时间</span></a></dd>
-                        <dd><a href="@{/ordering/orderList}"><i class="fa fa-clipboard fa-lg"></i> <span >每日排队数</span></a></dd>
+                        <dd><a href="/queuingExcel/excelListTime"><i class="fa fa-list fa-lg"></i> <span >人均排队时间</span></a></dd>
+                        <dd><a href="/queuingExcel/excelListNumber"><i class="fa fa-clipboard fa-lg"></i> <span >每日排队数</span></a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="fa fa-vcard fa-lg"></i> <span >进行叫号操作</span></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="@{/ordering/orderList}"><i class="fa fa-th-list fa-lg"></i> <span >叫号</span></a></dd>
+                        <dd><a href="/queuingForm/queuingList"><i class="fa fa-th-list fa-lg"></i> <span >叫号</span></a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -69,7 +69,7 @@
                     <i class="layui-icon">&#xe68e;</i>烤肉超棒</li>
             </ul>
                 <div class="layui-tab-item layui-show">
-                    <iframe src="/login" frameborder="0" id="iframeMainContent" style="width: 100%; height: 595px; border-radius: 2px;"></iframe>
+                    <iframe src="/queuingExcel/excelList" frameborder="0" id="iframeMainContent" style="width: 100%; height: 595px;"></iframe>
                 </div>
         </div>
     </div>

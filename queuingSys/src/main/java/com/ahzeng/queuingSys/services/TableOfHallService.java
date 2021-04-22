@@ -21,4 +21,7 @@ public interface TableOfHallService {
 
     Result<List<TableVo>> tableSelectAll();
 
+    Result<Integer> countTableNumber(String TableType);
+
+    Result<Integer> countAllTableNumber();
 }

@@ -60,4 +60,19 @@ class TableOfHallServiceTest {
     void tableSelectAll(){
         System.out.println(tableOfHallService.tableSelectAll());
     }
+
+    @Test
+    void countTableNumber(){
+        String smallTableType = "small";
+        String middleTableType = "middle";
+        String bigTableType = "big";
+        System.out.println(tableOfHallService.countTableNumber(smallTableType));
+        System.out.println(tableOfHallService.countTableNumber(middleTableType));
+        System.out.println(tableOfHallService.countTableNumber(bigTableType));
+    }
+
+    @Test
+    void countAllTableNumber(){
+        System.out.println(tableOfHallService.countAllTableNumber());
+    }
 }

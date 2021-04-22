@@ -37,6 +37,8 @@ public class TableOfHallServiceImpl implements TableOfHallService {
         }
         return Result.error(CodeMsg.tableSelect_ERROR);
     }
+
+
     //按条件查询桌子
     @Override
     public Result<List<TableVo>> tableSelect(TableOfHall record) {
@@ -105,4 +107,19 @@ public class TableOfHallServiceImpl implements TableOfHallService {
         return CodeMsg.tableDeleteByPrimaryKey_ERROR;
     }
 
+    @Override
+    public Result<Integer> countTableNumber(String TableType) {
+        if (tableOfHallMapper.countTableNumber(TableType) >= 0){
+            return Result.success(tableOfHallMapper.countTableNumber(TableType));
+        }
+        return Result.error(CodeMsg.countTableNumber_ERROR);
+    }
+
+    @Override
+    public Result<Integer> countAllTableNumber() {
+        if (tableOfHallMapper.countAllTableNumber() >= 0){
+            return Result.success(tableOfHallMapper.countAllTableNumber());
+        }
+        return Result.error(CodeMsg.countTableNumber_ERROR);
+    }
 }

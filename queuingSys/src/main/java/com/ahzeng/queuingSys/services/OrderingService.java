@@ -9,7 +9,7 @@ import com.ahzeng.queuingSys.vo.OrderingVo;
 import java.util.List;
 
 public interface OrderingService {
-    //按条件查询预定中间表表项，不传参就是返回全部内容
+    //按条件查询预定中间表表项
     Result<List<OrderingVo>> OrderingSelect(Ordering record);
     //根据id查询预定中间表表项
     Result<OrderingVo> OrderingSelectByPrimaryKey(Ordering key);

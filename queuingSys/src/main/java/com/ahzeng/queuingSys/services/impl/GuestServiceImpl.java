@@ -78,4 +78,17 @@ public class GuestServiceImpl implements GuestService {
         }
         return CodeMsg.GuestDeleteByPrimaryKey_ERROR;
     }
+
+    @Override
+    public CodeMsg GuestLoginVerify(Guest record) {
+        List<Guest> guestList = guestMapper.select(record);
+
+        if (guestList.size() == 0){
+            if (guestMapper.insertSelective(record) != 1){
+                return CodeMsg.GuestLoginVerify_ERROR;
+            }
+        }
+
+        return CodeMsg.GuestLoginVerify_SUCCESS;
+    }
 }

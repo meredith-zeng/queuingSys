@@ -37,7 +37,8 @@ public class CodeMsg {
     public static final CodeMsg tableInsertSelective_ERROR = new CodeMsg(207, "新增桌子失败");
     public static final CodeMsg tableDeleteByPrimaryKey_SUCCESS = new CodeMsg(208, "根据主键删除桌子成功");
     public static final CodeMsg tableDeleteByPrimaryKey_ERROR = new CodeMsg(209, "根据主键删除桌子失败");
-
+    public static final CodeMsg countTableNumber_SUCCESS = new CodeMsg(210, "根据类型统计桌子数量成功");
+    public static final CodeMsg countTableNumber_ERROR = new CodeMsg(211, "根据类型统计桌子数量失败");
     //顾客管理模块
     public static final CodeMsg GuestSelect_SUCCESS = new CodeMsg(300, "按条件查询顾客成功");
     public static final CodeMsg GuestSelect_ERROR = new CodeMsg(301, "按条件查询顾客失败");
@@ -49,6 +50,8 @@ public class CodeMsg {
     public static final CodeMsg GuestInsertSelective_ERROR = new CodeMsg(307, "新增顾客失败");
     public static final CodeMsg GuestDeleteByPrimaryKey_SUCCESS = new CodeMsg(308, "根据主键删除顾客成功");
     public static final CodeMsg GuestDeleteByPrimaryKey_ERROR = new CodeMsg(309, "根据主键删除顾客失败");
+    public static final CodeMsg GuestLoginVerify_SUCCESS = new CodeMsg(310, "顾客登录成功");
+    public static final CodeMsg GuestLoginVerify_ERROR = new CodeMsg(311, "顾客登录失败");
 
     //预定订单管理模块
     public static final CodeMsg OrderFormSelect_SUCCESS = new CodeMsg(500, "按条件查询预定订单成功");
@@ -87,7 +90,43 @@ public class CodeMsg {
     public static final CodeMsg QueuingFormInsertSelective_ERROR = new CodeMsg(709, "新增排队订单失败");
     public static final CodeMsg QueuingFormDeleteByPrimaryKey_SUCCESS = new CodeMsg(710, "根据主键删除排队订单成功");
     public static final CodeMsg QueuingFormDeleteByPrimaryKey_ERROR = new CodeMsg(711, "根据主键删除排队订单失败");
+    public static final CodeMsg countQueuingGuestNumber_SUCCESS = new CodeMsg(712, "查询正在排队的顾客数量成功");
+    public static final CodeMsg countQueuingGuestNumber_ERROR = new CodeMsg(713, "查询正在排队的顾客数量失败");
+    //排队中间表管理
+    public static final CodeMsg ApplyingSelect_SUCCESS = new CodeMsg(714, "按条件查询排队中间表成功");
+    public static final CodeMsg ApplyingSelect_ERROR = new CodeMsg(715, "按条件查询排队中间表失败");
+    public static final CodeMsg ApplyingSelectAll_SUCCESS = new CodeMsg(716, "查询所有排队中间表成功");
+    public static final CodeMsg ApplyingSelectAll_ERROR = new CodeMsg(717, "查询所有排队中间表失败");
+    public static final CodeMsg ApplyingSelectByPrimaryKey_SUCCESS = new CodeMsg(718, "根据id查询排队中间表成功");
+    public static final CodeMsg ApplyingSelectByPrimaryKey_ERROR = new CodeMsg(719, "根据id查询排队中间表失败");
+    public static final CodeMsg ApplyingUpdateByPrimaryKey_SUCCESS = new CodeMsg(720, "根据主键修改指定排队中间表成功");
+    public static final CodeMsg ApplyingUpdateByPrimaryKey_ERROR = new CodeMsg(721, "根据主键修改指定排队中间表失败");
+    public static final CodeMsg ApplyingInsertSelective_SUCCESS = new CodeMsg(722, "新增排队中间表成功");
+    public static final CodeMsg ApplyingInsertSelective_ERROR = new CodeMsg(723, "新增排队中间表失败");
+    public static final CodeMsg ApplyingDeleteByPrimaryKey_SUCCESS = new CodeMsg(724, "根据主键删除排队中间表成功");
+    public static final CodeMsg ApplyingDeleteByPrimaryKey_ERROR = new CodeMsg(725, "根据主键删除排队中间表失败");
 
+
+    //排队数据表管理
+    public static final CodeMsg QueuingExcelSelect_SUCCESS = new CodeMsg(800, "按条件查询排队论数据成功");
+    public static final CodeMsg QueuingExcelSelect_ERROR = new CodeMsg(801, "按条件查询排队论数据失败");
+    public static final CodeMsg QueuingExcelSelectByPrimaryKey_SUCCESS = new CodeMsg(802, "根据id查询排队论数据成功");
+    public static final CodeMsg QueuingExcelSelectByPrimaryKey_ERROR = new CodeMsg(803, "根据id查询排队论数据失败");
+    public static final CodeMsg QueuingExcelUpdateByPrimaryKeySelective_SUCCESS = new CodeMsg(804, "根据主键修改指定日期的排队论数据成功");
+    public static final CodeMsg QueuingExcelUpdateByPrimaryKeySelective_ERROR = new CodeMsg(805, "根据主键修改指定日期的排队论数据失败");
+    public static final CodeMsg QueuingExcelInsertSelective_SUCCESS = new CodeMsg(806, "新增排队论数据成功");
+    public static final CodeMsg QueuingExcelInsertSelective_ERROR = new CodeMsg(807, "新增排队论数据失败");
+    public static final CodeMsg QueuingExcelDeleteByPrimaryKey_SUCCESS = new CodeMsg(808, "根据主键删除排队论数据成功");
+    public static final CodeMsg QueuingExcelDeleteByPrimaryKey_ERROR = new CodeMsg(809, "根据主键删除排队论数据失败");
+    public static final CodeMsg QueuingExcelSelectAll_SUCCESS = new CodeMsg(810, "查询所有排队论数据成功");
+    public static final CodeMsg QueuingExcelSelectAll_ERROR = new CodeMsg(811, "查询所有排队论数据失败");
+    //排队论表管理
+    public static final CodeMsg QueuingTheorySelectByPrimaryKey_SUCCESS = new CodeMsg(812, "根据id查询指定的排队数据成功");
+    public static final CodeMsg QueuingTheorySelectByPrimaryKey_ERROR = new CodeMsg(813, "根据id查询指定的排队数据失败");
+    public static final CodeMsg QueuingTheoryUpdateByPrimaryKeySelective_SUCCESS = new CodeMsg(814, "根据主键修改指定的排队数据成功");
+    public static final CodeMsg QueuingTheoryUpdateByPrimaryKeySelective_ERROR = new CodeMsg(815, "根据主键修改指定的排队数据失败");
+    public static final CodeMsg QueuingTheoryInsertSelective_SUCCESS = new CodeMsg(816, "新增排队数据成功失败");
+    public static final CodeMsg QueuingTheoryInsertSelective_ERROR = new CodeMsg(817, "新增排队数据失败");
 
     private CodeMsg(int code, String msg) {
             this.code=code;
