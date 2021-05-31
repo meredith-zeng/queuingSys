@@ -5,6 +5,7 @@ import com.ahzeng.queuingSys.utils.CodeMsg;
 import com.ahzeng.queuingSys.utils.Result;
 import com.ahzeng.queuingSys.vo.QueuingFormVo;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface QueuingFormService {
@@ -22,4 +23,6 @@ public interface QueuingFormService {
     CodeMsg QueuingFormDeleteByPrimaryKey(QueuingForm record);
 
     Result<Integer> countQueuingGuestNumber();
+
+    Result<QueuingFormVo> QueuingFormNewOne(QueuingFormVo record) throws ParseException;
 }

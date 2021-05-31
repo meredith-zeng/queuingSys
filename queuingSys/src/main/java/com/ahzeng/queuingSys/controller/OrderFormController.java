@@ -43,19 +43,19 @@ public class OrderFormController {
 
     @PostMapping(value = "/select")
     @ResponseBody
-    public Result<List<OrderFormVo>> orderFormSelect(OrderForm record) {
+    public Result<List<OrderFormVo>> orderFormSelect(@RequestBody OrderForm record) {
         return orderFormService.OrderFormSelect(record);
     }
 
     @PostMapping(value = "/selectByPrimaryKey")
     @ResponseBody
-    public Result<OrderFormVo> OrderFormSelectByPrimaryKey(OrderForm record) {
+    public Result<OrderFormVo> OrderFormSelectByPrimaryKey(@RequestBody OrderForm record) {
         return orderFormService.OrderFormSelectByPrimaryKey(record.getOrderCode());
     }
 
     @PostMapping(value = "/insertSelective")
     @ResponseBody
-    public CodeMsg OrderFormInsertSelective(OrderForm record) {
+    public CodeMsg OrderFormInsertSelective(@RequestBody OrderForm record) {
         return orderFormService.OrderFormInsertSelective(record);
     }
 
@@ -69,5 +69,11 @@ public class OrderFormController {
     @ResponseBody
     public CodeMsg orderFormDelete(@RequestBody OrderForm orderForm){
         return orderFormService.OrderFormDeleteByPrimaryKey(orderForm);
+    }
+
+    @PostMapping(value = "/newOneOrderForm")
+    @ResponseBody
+    public CodeMsg OrderFormNewOne(@RequestBody OrderFormVo orderFormVo){
+        return orderFormService.OrderFormNewOne(orderFormVo);
     }
 }

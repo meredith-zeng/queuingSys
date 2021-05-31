@@ -20,4 +20,6 @@ public interface OrderFormService {
     CodeMsg OrderFormDeleteByPrimaryKey(Object key);
 
     Result<List<OrderFormVo>> OrderFormSelectAll();
+
+    CodeMsg OrderFormNewOne(OrderFormVo record);
 }

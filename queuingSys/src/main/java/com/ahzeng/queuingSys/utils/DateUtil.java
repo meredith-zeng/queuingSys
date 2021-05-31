@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class DateUtil {
@@ -45,5 +47,62 @@ public class DateUtil {
             return sdf.parse(result);
         }
 
+    /**
+     * 判断时间是否处于某个时间段内
+     *
+     * @param time 需要比较的时间
+     * @param beginTime 起始时间
+     * @param endTime 结束时间
+     */
+    public static boolean belongCalendar(Date time, Date beginTime, Date endTime) {
+        Calendar date = Calendar.getInstance();
+        date.setTime(time);
+        Calendar after = Calendar.getInstance();
+        after.setTime(beginTime);
+        Calendar before = Calendar.getInstance();
+        before.setTime(endTime);
+        if (date.after(after) && date.before(before)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    /**
+     * 计算忙时时间：
+     * 传入：当日Date
+     * 输出：当日午市开始时间、当日午市结束时间、当日晚市开始时间、当日晚市结束时间
+     */
+    public static List<Date> switchBusyCalendar(Date time) {
+        Calendar timeCalendar = Calendar.getInstance();
+        timeCalendar.setTime(time);
+
+        List<Date> datesList = new LinkedList<>();
+
+        timeCalendar.set(Calendar.HOUR_OF_DAY,11);
+        timeCalendar.set(Calendar.MINUTE,30);
+        timeCalendar.set(Calendar.SECOND,0);
+        Date lunchBeginTime = timeCalendar.getTime();
+        datesList.add(lunchBeginTime);
+
+        timeCalendar.set(Calendar.HOUR_OF_DAY,14);
+        timeCalendar.set(Calendar.MINUTE,0);
+        timeCalendar.set(Calendar.SECOND,0);
+        Date lunchEndTime = timeCalendar.getTime();
+        datesList.add(lunchEndTime);
+
+        timeCalendar.set(Calendar.HOUR_OF_DAY,17);
+        timeCalendar.set(Calendar.MINUTE,0);
+        timeCalendar.set(Calendar.SECOND,0);
+        Date dinnerBeginTime = timeCalendar.getTime();
+        datesList.add(dinnerBeginTime);
+
+        timeCalendar.set(Calendar.HOUR_OF_DAY,20);
+        timeCalendar.set(Calendar.MINUTE,0);
+        timeCalendar.set(Calendar.SECOND,0);
+        Date dinnerEndTime = timeCalendar.getTime();
+        datesList.add(dinnerEndTime);
+
+        return datesList;
+    }
 }

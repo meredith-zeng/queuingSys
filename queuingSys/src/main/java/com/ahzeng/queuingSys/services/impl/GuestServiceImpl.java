@@ -80,15 +80,14 @@ public class GuestServiceImpl implements GuestService {
     }
 
     @Override
-    public CodeMsg GuestLoginVerify(Guest record) {
+    public Result<GuestVo> GuestLoginVerify(Guest record) {
         List<Guest> guestList = guestMapper.select(record);
-
-        if (guestList.size() == 0){
-            if (guestMapper.insertSelective(record) != 1){
-                return CodeMsg.GuestLoginVerify_ERROR;
-            }
+        if (guestList.size() == 1){
+            GuestVo guestVo = new GuestVo();
+            guestVo.setGuestId(guestList.get(0).getGuestId());
+            guestVo.setPhoneNumber(guestList.get(0).getPhoneNumber());
+            return Result.success(guestVo);
         }
-
-        return CodeMsg.GuestLoginVerify_SUCCESS;
+        return Result.error(CodeMsg.GuestLoginVerify_ERROR);
     }
 }

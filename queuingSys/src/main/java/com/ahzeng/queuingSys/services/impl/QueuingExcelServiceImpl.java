@@ -34,9 +34,6 @@ public class QueuingExcelServiceImpl implements QueuingExcelService {
                 todayQueuingNumber.add(middleNumber);
                 todayQueuingNumber.add(bigNumber);
 
-
-//            //假数据，等待排队论算法接入计算真数据
-//            Date averageQueuingTime = queuingExcel.getAverageTime();
             queuingExcelVo.setTodayQueuingNumber(todayQueuingNumber);
             queuingExcelVo.setDataDate(queuingExcel.getDataDate());
             queuingExcelVo.setDateId(queuingExcel.getDateId());

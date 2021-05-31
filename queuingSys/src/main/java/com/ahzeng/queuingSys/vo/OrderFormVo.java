@@ -17,4 +17,10 @@ public class OrderFormVo {
     private Integer guestId;
 
     private Integer guestNumber;
+
+    private String phoneNumber;
+
+    private String lastName;
+
+    private String gender;
 }

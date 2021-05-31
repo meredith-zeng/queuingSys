@@ -19,5 +19,5 @@ public interface GuestService {
     //根据主键删除顾客
     CodeMsg GuestDeleteByPrimaryKey(Object key);
     //顾客登录验证
-    CodeMsg GuestLoginVerify(Guest record);
+    Result<GuestVo>  GuestLoginVerify(Guest record);
 }

@@ -6,6 +6,8 @@ import com.ahzeng.queuingSys.pojo.Worker;
 import com.ahzeng.queuingSys.services.GuestService;
 import com.ahzeng.queuingSys.services.WorkerService;
 import com.ahzeng.queuingSys.utils.CodeMsg;
+import com.ahzeng.queuingSys.utils.Result;
+import com.ahzeng.queuingSys.vo.GuestVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +46,7 @@ public class UserController {
     }
     @RequestMapping("/guestLogin")
     @ResponseBody
-    public CodeMsg guestLogin(@RequestBody Guest guest) {
+    public Result<GuestVo> guestLogin(@RequestBody Guest guest) {
         return guestService.GuestLoginVerify(guest);
     }
 

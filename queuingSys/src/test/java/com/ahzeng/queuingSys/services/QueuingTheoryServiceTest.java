@@ -28,18 +28,41 @@ TableOfHallService tableOfHallService;
 
     @Test
     void queuingTheoryUpdateByPrimaryKeySelective() {
+//        String tableType = "小桌";
+//        String tableType = "中桌";
+//        String tableType = "大桌";
+        String tableType = "全桌型";
         QueuingTheory queuingTheory = new QueuingTheory();
-        queuingTheory.setQueuingTheoryId(6);
+//        queuingTheory.setQueuingTheoryId(8);
+//        queuingTheory.setQueuingTheoryId(9);
+//        queuingTheory.setQueuingTheoryId(10);
+        queuingTheory.setQueuingTheoryId(16);
+        int n = tableOfHallService.countAllTableNumber().getData();
+        double lambda = 8;
+        double mu = 1;
+
+        queuingTheory.setN(n);
+        queuingTheory.setLambda(lambda);
+        queuingTheory.setMu(mu);
+
+        List<Double> queuingTheoryList = QueuingTheoryUtil.predictQueuingTime(n,lambda,mu);
+        queuingTheory.setLq(queuingTheoryList.get(0));
+        queuingTheory.setWq((queuingTheoryList.get(1))*60);
+        queuingTheory.setWs((queuingTheoryList.get(2))*60);
+
+        queuingTheoryService.QueuingTheoryUpdateByPrimaryKeySelective(queuingTheory);
     }
 
     @Test
     void queuingTheoryInsertSelective() {
 //        String tableType = "小桌";
-        String tableType = "中桌";
+//        String tableType = "中桌";
 //        String tableType = "大桌";
-        int n = tableOfHallService.countTableNumber(tableType).getData();
-        double lambda = 7;
-        double mu = 3;
+        String tableType = "全桌型";
+
+        int n = tableOfHallService.countAllTableNumber().getData();
+        double lambda = 13;
+        double mu = 1;
 
         QueuingTheory queuingTheory = new QueuingTheory();
         queuingTheory.setN(n);

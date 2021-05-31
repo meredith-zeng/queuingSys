@@ -8,6 +8,7 @@ import com.ahzeng.queuingSys.vo.QueuingExcelVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -42,30 +43,30 @@ public class QueuingExcelController {
 
     @PostMapping(value = "/queuingNumber")
     @ResponseBody
-    public Result<QueuingExcelVo> QueuingExcelQueuingNumber(QueuingExcel record) {
+    public Result<QueuingExcelVo> QueuingExcelQueuingNumber(@RequestBody QueuingExcel record) {
         return queuingExcelService.QueuingExcelQueuingNumber(record);
     }
 
     @PostMapping(value = "/queuingTime")
     @ResponseBody
-    public Result<QueuingExcelVo> QueuingExcelQueuingTime(QueuingExcel record) {
+    public Result<QueuingExcelVo> QueuingExcelQueuingTime(@RequestBody QueuingExcel record) {
         return queuingExcelService.QueuingExcelQueuingTime(record);
     }
     @PostMapping(value = "/update")
     @ResponseBody
-    public CodeMsg QueuingExcelUpdateByPrimaryKeySelective(QueuingExcel record){
+    public CodeMsg QueuingExcelUpdateByPrimaryKeySelective(@RequestBody QueuingExcel record){
         return queuingExcelService.QueuingExcelUpdateByPrimaryKeySelective(record);
     }
 
     @PostMapping(value = "/insert")
     @ResponseBody
-    public CodeMsg QueuingExcelInsertSelective(QueuingExcel record){
+    public CodeMsg QueuingExcelInsertSelective(@RequestBody QueuingExcel record){
         return queuingExcelService.QueuingExcelInsertSelective(record);
     }
 
     @PostMapping(value = "/delete")
     @ResponseBody
-    public CodeMsg QueuingExcelDeleteByPrimaryKey(QueuingExcel key){
+    public CodeMsg QueuingExcelDeleteByPrimaryKey(@RequestBody QueuingExcel key){
         return queuingExcelService.QueuingExcelDeleteByPrimaryKey(key);
     }
 }

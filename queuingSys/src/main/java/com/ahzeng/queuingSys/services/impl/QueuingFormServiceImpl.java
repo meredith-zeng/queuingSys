@@ -8,13 +8,18 @@ import com.ahzeng.queuingSys.pojo.QueuingForm;
 import com.ahzeng.queuingSys.services.ApplyingService;
 import com.ahzeng.queuingSys.services.GuestService;
 import com.ahzeng.queuingSys.services.QueuingFormService;
+import com.ahzeng.queuingSys.services.QueuingTheoryService;
 import com.ahzeng.queuingSys.utils.CodeMsg;
+import com.ahzeng.queuingSys.utils.DateUtil;
 import com.ahzeng.queuingSys.utils.Result;
 import com.ahzeng.queuingSys.vo.GuestVo;
 import com.ahzeng.queuingSys.vo.QueuingFormVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +32,9 @@ public class QueuingFormServiceImpl implements QueuingFormService {
     GuestService guestService;
     @Autowired
     ApplyingService applyingService;
+    @Autowired
+    QueuingTheoryService queuingTheoryService;
+
     @Override
     public Result<List<QueuingFormVo>> QueuingFormSelect(QueuingForm record) {
         List<QueuingForm> queuingFormList= queuingFormMapper.select(record);
@@ -144,20 +152,17 @@ public class QueuingFormServiceImpl implements QueuingFormService {
         return CodeMsg.QueuingFormUpdateByPrimaryKeySelective_ERROR;
     }
 
+    /**
+     * QueuingForm需要设置的字段：
+     * 1. guestId
+     * 2. queuingStatus（"直接设置"）
+     * 3. predictQueuingTime（”算法计算“）
+     * 4. guestNumber（”前端获取“）
+     * 5. phoneNumber（）
+     */
+
     @Override
     public CodeMsg QueuingFormInsertSelective(QueuingForm record) {
-        Guest guest = new Guest();
-        guest.setPhoneNumber(record.getPhoneNumber());
-
-        if (guestService.GuestSelect(guest).getData() != null){
-            int guestId = guestService.GuestSelect(guest).getData().get(0).getGuestId();
-            record.setGuestId(guestId);
-        }else{
-            
-
-        }
-        record.setQueuingStatus("排号中");
-        //预计到号时间计算方法，需要设置预计到号时间
         int resultOfOperation = queuingFormMapper.insertSelective(record);
         if (resultOfOperation ==1){
             Applying applying = new Applying();
@@ -169,8 +174,10 @@ public class QueuingFormServiceImpl implements QueuingFormService {
                 return CodeMsg.QueuingFormInsertSelective_SUCCESS;
             }
         }
+
         return CodeMsg.QueuingFormInsertSelective_ERROR;
     }
+
 
     @Override
     public CodeMsg QueuingFormDeleteByPrimaryKey(QueuingForm record) {
@@ -192,5 +199,83 @@ public class QueuingFormServiceImpl implements QueuingFormService {
 
         }
         return Result.error(CodeMsg.countQueuingGuestNumber_ERROR);
+    }
+
+    @Override
+    public Result<QueuingFormVo> QueuingFormNewOne(QueuingFormVo record) throws ParseException {
+        Guest guest = new Guest();
+        guest.setPhoneNumber(record.getPhoneNumber());
+
+        if (guestService.GuestSelect(guest).getData() != null){
+            int guestId = guestService.GuestSelect(guest).getData().get(0).getGuestId();
+
+            QueuingForm queuingForm = new QueuingForm();
+            queuingForm.setGuestId(guestId);
+            queuingForm.setQueuingStatus("排号中");
+            queuingForm.setGuestNumber(record.getGuestNumber());
+            queuingForm.setPhoneNumber(record.getPhoneNumber());
+
+            if(QueuingFormInsertSelective(queuingForm) ==CodeMsg.QueuingFormInsertSelective_SUCCESS){
+                QueuingForm result =  queuingFormMapper.select(queuingForm).get(0);
+                if(result != null){
+                    Date time = result.getQueuingBeginTime();
+                    List<Date> dateList  = DateUtil.switchBusyCalendar(time);
+                    boolean lunchResult = DateUtil.belongCalendar(time,dateList.get(0),dateList.get(1));
+                    boolean dinnerResult = DateUtil.belongCalendar(time,dateList.get(2),dateList.get(3));
+                    if(lunchResult || dinnerResult){
+                        //忙时确认桌型大小
+                        int guestNumber = result.getGuestNumber();
+                        if (guestNumber <4 && guestNumber >0){
+                            //小桌
+                            double Wq =  queuingTheoryService.QueuingTheorySelectByPrimaryKey(9).getData().getWq();
+                            int minute =  (int) Wq%60;
+                            int hour = (int) Wq/60;
+                            Date predictTime = DateUtil.addTime(time,hour,minute,0);
+                            result.setPredictQueuingTime(predictTime);
+                        }else if(guestNumber>4 && guestNumber <7){
+                            //中桌
+                            double Wq = queuingTheoryService.QueuingTheorySelectByPrimaryKey(10).getData().getWq();
+                            int minute =  (int) Wq%60;
+                            int hour = (int) Wq/60;
+                            Date predictTime = DateUtil.addTime(time,hour,minute,0);
+                            result.setPredictQueuingTime(predictTime);
+                        }else if (guestNumber>7){
+                            //大桌
+                            double Wq = queuingTheoryService.QueuingTheorySelectByPrimaryKey(8).getData().getWq();
+                            int minute =  (int) Wq%60;
+                            int hour = (int) Wq/60;
+                            Date predictTime = DateUtil.addTime(time,hour,minute,0);
+                            result.setPredictQueuingTime(predictTime);
+                        }
+                    }
+                    else{
+                        //闲时进行大小中桌的合并测试
+                        double Wq = queuingTheoryService.QueuingTheorySelectByPrimaryKey(16).getData().getWq();
+                        int minute =  (int) Wq%60;
+                        int hour = (int) Wq/60;
+                        Date predictTime = DateUtil.addTime(time,hour,minute,0);
+                        result.setPredictQueuingTime(predictTime);
+                    }
+                    int resultOfOperation = queuingFormMapper.updateByPrimaryKeySelective(result);
+                    if(resultOfOperation ==1){
+                        QueuingFormVo queuingFormVo = new QueuingFormVo();
+
+                        queuingFormVo.setPredictQueuingTime(queuingForm.getPredictQueuingTime());
+                        queuingFormVo.setGuestId(guestId);
+                        queuingFormVo.setQueuingStatus("排号中");
+                        queuingFormVo.setPredictQueuingTime(result.getPredictQueuingTime());
+                        queuingFormVo.setGuestNumber(queuingForm.getGuestNumber());
+                        queuingFormVo.setQueuingBeginTime(queuingForm.getQueuingBeginTime());
+                        queuingFormVo.setQueuingOrderId(queuingForm.getQueuingOrderId());
+                        queuingFormVo.setPhoneNumber(queuingForm.getPhoneNumber());
+                        return Result.success(queuingFormVo);
+
+                    }
+                }
+
+
+            }
+        }
+            return Result.error(CodeMsg.QueuingFormInsertSelective_ERROR);
     }
 }

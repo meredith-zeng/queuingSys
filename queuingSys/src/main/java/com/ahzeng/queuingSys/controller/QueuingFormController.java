@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -39,22 +40,27 @@ public class QueuingFormController {
         return queuingFormService.QueuingFormUpdateByPrimaryKeySelective(queuingForm);
     }
 
-    @PostMapping(value = "/insert")
+    @PostMapping(value = "/newQueuingForm")
     @ResponseBody
-    public CodeMsg QueuingFormInsertSelective(QueuingForm record){
-        return queuingFormService.QueuingFormInsertSelective(record);
+    public Result<QueuingFormVo> newQueuingForm(@RequestBody QueuingFormVo record) throws ParseException {
+        return queuingFormService.QueuingFormNewOne(record);
     }
 
     @PostMapping(value = "/delete")
     @ResponseBody
-    public CodeMsg QueuingFormDeleteByPrimaryKey(QueuingForm record){
+    public CodeMsg QueuingFormDeleteByPrimaryKey(@RequestBody QueuingForm record){
         return queuingFormService.QueuingFormDeleteByPrimaryKey(record);
     }
 
     @PostMapping(value = "/select")
     @ResponseBody
-    public Result<List<QueuingFormVo>> QueuingFormSelect(QueuingForm record){
+    public Result<List<QueuingFormVo>> QueuingFormSelect(@RequestBody QueuingForm record){
         return queuingFormService.QueuingFormSelect(record);
     }
 
+    @PostMapping(value = "/selectById")
+    @ResponseBody
+    public Result<QueuingFormVo> QueuingFormSelectById(@RequestBody QueuingForm record){
+        return queuingFormService.QueuingFormSelectByPrimaryKey(record.getQueuingOrderId());
+    }
 }

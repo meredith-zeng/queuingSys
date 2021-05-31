@@ -128,4 +128,26 @@ public class OrderFormServiceImpl implements OrderFormService {
         }
         return CodeMsg.OrderFormDeleteByPrimaryKey_ERROR;
     }
+
+    @Transactional
+    @Override
+    public CodeMsg OrderFormNewOne(OrderFormVo record){
+
+        Guest guest = new Guest();
+        guest.setPhoneNumber(record.getPhoneNumber());
+
+        if (guestService.GuestSelect(guest).getData() != null){
+            int guestId = guestService.GuestSelect(guest).getData().get(0).getGuestId();
+            OrderForm orderForm = new OrderForm();
+            orderForm.setOrderStatus("待确认");
+            orderForm.setPhoneNumber(record.getPhoneNumber());
+            orderForm.setGuestNumber(record.getGuestNumber());
+            orderForm.setOrderTime(record.getOrderTime());
+            orderForm.setGuestId(guestId);
+            if (OrderFormInsertSelective(orderForm) == CodeMsg.OrderFormInsertSelective_SUCCESS){
+                return CodeMsg.OrderFormInsertSelective_SUCCESS;
+            }
+        }
+        return CodeMsg.OrderFormInsertSelective_ERROR;
+    }
 }
